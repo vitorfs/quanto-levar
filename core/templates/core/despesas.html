@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Despesas{% endblock %}
+
+{% block conteudo %}
+  <h1>Despesas</h1>
+  {% for despesa in despesas %}
+    <p>{{ despesa.tipo }}</p>
+  {% empty %}
+    <p>Nenhuma despesa cadastrada.</p>
+  {% endfor %}
+{% endblock conteudo %}

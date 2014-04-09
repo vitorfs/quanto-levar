@@ -1,8 +1,7 @@
 from django.db import models
-from test.test_imageop import MAX_LEN
 
 class Cotacao(models.Model):
-    id = models.CharField("Sigla", max_length=3, primary_key=True)
+    sigla = models.CharField(max_length=3, unique=True)
     valor = models.FloatField("Valor")
 
     class Meta:
@@ -10,7 +9,6 @@ class Cotacao(models.Model):
       verbose_name_plural = 'Cotacaes'
     
 class Despesa(models.Model):
-    id = models.AutoField(primary_key=True)
     tipo = models.CharField("Tipo", max_length=255)
 
     class Meta:
@@ -18,7 +16,6 @@ class Despesa(models.Model):
       verbose_name_plural = 'Despesas'
     
 class Cidade(models.Model):
-    id = models.AutoField(primary_key=True)
     cotacao = models.ForeignKey(Cotacao)
     cidade = models.CharField("Cidade", max_length=255)
     estado = models.CharField("Estado", max_length=255)

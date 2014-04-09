@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{% block titulo %}Quanto Levar{% endblock %}</title>
+  <link href="{{ STATIC_URL }}css/style.css" rel="stylesheet" media="screen">
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+</head>
+<body>
+  <header>
+    <h1>Quanto Levar</h1>
+    <ul>
+      <li><a href="{% url 'home' %}">Inicial</a></li>
+      <li><a href="{% url 'despesas' %}">Despesas</a></li>
+    </ul>
+  </header>
+  <section class="content">
+    {% block conteudo %}
+    {% endblock conteudo %}
+  </section>
+  <footer>
+    <a href="{% url 'home' %}">quantolevar.com</a>
+  </footer>
+</body>
+</html>
