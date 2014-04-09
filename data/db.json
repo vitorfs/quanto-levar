@@ -1,0 +1,73 @@
+[
+  {
+    "model": "core.Despesa",
+    "pk": 1,
+    "fields": {
+      "tipo": "Café da Manhã"
+    }
+  },
+  {
+    "model": "core.Despesa",
+    "pk": 2,
+    "fields": {
+      "tipo": "Almoço"
+    }
+  },
+  {
+    "model": "core.Despesa",
+    "pk": 3,
+    "fields": {
+      "tipo": "Lanche"
+    }
+  },
+  {
+    "model": "core.Despesa",
+    "pk": 4,
+    "fields": {
+      "tipo": "Jantar"
+    }
+  },
+  {
+    "model": "core.Despesa",
+    "pk": 5,
+    "fields": {
+      "tipo": "Ceia"
+    }
+  },
+  {
+    "model": "core.Cotacao",
+    "pk": 1,
+    "fields": {
+      "sigla": "USD",
+      "valor": 2.1974
+    }
+  },
+  {
+    "model": "core.Cotacao",
+    "pk": 2,
+    "fields": {
+      "sigla": "ARS",
+      "valor": 0.2747
+    }
+  },
+  {
+    "model": "core.Cidade",
+    "pk": 1,
+    "fields": {
+      "cotacao": 1,
+      "cidade": "Nova York",
+      "estado": "",
+      "pais": "Estados Unidos"
+    }
+  },
+  {
+    "model": "core.Cidade",
+    "pk": 2,
+    "fields": {
+      "cotacao": 2,
+      "cidade": "Buenos Aires",
+      "estado": "",
+      "pais": "Argentina"
+    }
+  }
+]

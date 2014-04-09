@@ -4,9 +4,14 @@
 
 {% block conteudo %}
   <h1>Despesas</h1>
-  {% for despesa in despesas %}
-    <p>{{ despesa.tipo }}</p>
-  {% empty %}
-    <p>Nenhuma despesa cadastrada.</p>
-  {% endfor %}
+  <form action="{% url 'calculo' %}">
+    <input type="hidden" id="cidade" />
+    <p>Dias <input type="text" id="dias" /></p>
+    {% for despesa in despesas %}
+      <p><input type="checkbox"/>{{ despesa.tipo }}</p>
+    {% empty %}
+      <p>Nenhuma despesa cadastrada.</p>
+    {% endfor %}
+    <input type="submit" value="Calcular"/>
+  </form>
 {% endblock conteudo %}
