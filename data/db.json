@@ -1,73 +1,77 @@
 [
   {
-    "model": "core.Despesa",
+    "model": "core.Nivel",
     "pk": 1,
     "fields": {
-      "tipo": "Café da Manhã"
+      "nome": "Econômico"
     }
   },
   {
-    "model": "core.Despesa",
-    "pk": 2,
+    "model": "core.Categoria",
+    "pk": 1,
     "fields": {
-      "tipo": "Almoço"
-    }
-  },
-  {
-    "model": "core.Despesa",
-    "pk": 3,
-    "fields": {
-      "tipo": "Lanche"
-    }
-  },
-  {
-    "model": "core.Despesa",
-    "pk": 4,
-    "fields": {
-      "tipo": "Jantar"
-    }
-  },
-  {
-    "model": "core.Despesa",
-    "pk": 5,
-    "fields": {
-      "tipo": "Ceia"
+      "nome": "Alimentação"
     }
   },
   {
     "model": "core.Cotacao",
     "pk": 1,
-    "fields": {
-      "sigla": "USD",
-      "valor": 2.1974
-    }
-  },
-  {
-    "model": "core.Cotacao",
-    "pk": 2,
     "fields": {
       "sigla": "ARS",
       "valor": 0.2747
     }
   },
   {
-    "model": "core.Cidade",
+    "model": "core.Despesa",
     "pk": 1,
     "fields": {
-      "cotacao": 1,
-      "cidade": "Nova York",
-      "estado": "",
-      "pais": "Estados Unidos"
+      "categoria": "1",
+      "nome": "Café da Manhã"
+    }
+  },
+  {
+    "model": "core.Despesa",
+    "pk": 2,
+    "fields": {
+      "categoria": "1",
+      "nome": "Almoço"
+    }
+  },
+  {
+    "model": "core.Pais",
+    "pk": 1,
+    "fields": {
+      "cotacao": "1",
+      "nome": "Argentina"
     }
   },
   {
     "model": "core.Cidade",
+    "pk": 1,
+    "fields": {
+      "pais": 1,
+      "nome": "Buenos Aires",
+      "estado": ""
+    }
+  },
+  {
+    "model": "core.CidadeDespesa",
+    "pk": 1,
+    "fields": {
+      "cidade": 1,
+      "despesa": 1,
+      "nivel": 1,
+      "valor": 100 
+    }
+  },
+  {
+    "model": "core.CidadeDespesa",
     "pk": 2,
     "fields": {
-      "cotacao": 2,
-      "cidade": "Buenos Aires",
-      "estado": "",
-      "pais": "Argentina"
+      "cidade": 1,
+      "despesa": 2,
+      "nivel": 1,
+      "valor": 50 
     }
   }
 ]

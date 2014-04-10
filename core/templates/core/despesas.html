@@ -4,13 +4,13 @@
 
 {% block conteudo %}
   <h1>Despesas</h1>
-  <form action="{% url 'calculo' %}">
-    <input type="hidden" id="cidade" />
-    <p>Dias <input type="text" id="dias" /></p>
+  <form action="{% url 'calculo' %}" method="get">
+    <input type="hidden" id="cidade" name="cidade" value="{{ cidade }}" />
+    <p>Dias de viagem <input type="text" id="dias" name="dias" /></p>
     {% for despesa in despesas %}
-      <p><input type="checkbox"/>{{ despesa.tipo }}</p>
+      <p><input id="despesas_selecionadas" name="despesas_selecionadas" type="checkbox" value="{{ despesa.despesa.id}}" checked="checked"/>{{ despesa.despesa.nome }}</p>
     {% empty %}
-      <p>Nenhuma despesa cadastrada.</p>
+      <p>Nenhuma despesa cadastrada para essa cidade.</p>
     {% endfor %}
     <input type="submit" value="Calcular"/>
   </form>

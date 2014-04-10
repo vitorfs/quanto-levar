@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 
 {% block conteudo %}
-  <h1>Página Inicial</h1>
+  <h1>Digite a cidade que deseja pesquisar</h1>
+  <br/>
+  <form action="{% url 'despesas' %}" method="get">
+    <input id="cidade" name="cidade" type="text" size="10"/><input type="submit" value="Procurar"/>
+  </form>
 {% endblock conteudo %}
