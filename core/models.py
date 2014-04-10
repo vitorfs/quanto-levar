@@ -2,6 +2,10 @@ from django.db import models
 
 class Nivel(models.Model):
     nome = models.CharField("Nome", max_length=255)
+
+class Meta:
+    verbose_name = 'Nivel'
+    verbose_name_plural = 'Niveis'
     
 class Categoria(models.Model):
     nome = models.CharField("Nome", max_length=255)
