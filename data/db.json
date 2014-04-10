@@ -22,6 +22,14 @@
     }
   },
   {
+    "model": "core.Cotacao",
+    "pk": 2,
+    "fields": {
+      "sigla": "BRL",
+      "valor": 1
+    }
+  },
+  {
     "model": "core.Despesa",
     "pk": 1,
     "fields": {

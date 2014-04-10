@@ -13,6 +13,11 @@ def calculo(request):
     cidade = request.GET.get('cidade')
     dias = request.GET.get('dias')
     despesas_selecionadas = request.GET.get('despesas_selecionadas')
-    despesa = 100
-    lista_valores = {"ARS": 0.22 * 100, "BRL": 100}
+    for despesa in despesas_selecionadas:
+        info = CidadeDespesa.objects.filter(cidade=cidade, despesa=despesa, nivel=1)
+        print info
+        print info.cidade
+        sigla = info.cidade.pais.cotacao.sigla
+        cotacao = info.cidade.pais.cotacao.valor
+        lista_valores.update({sigla, cotacao * info.valor})
     return render(request, 'core/calculo.html', {'valores': lista_valores, 'dias': dias, 'cidade': cidade})
