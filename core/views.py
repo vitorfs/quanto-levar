@@ -12,9 +12,10 @@ def despesas(request):
 def calculo(request):
     cidade = request.GET.get('cidade')
     dias = request.GET.get('dias')
+    nivel = request.GET.get('nivel')
     despesas_selecionadas = request.GET.get('despesas_selecionadas')
     for despesa in despesas_selecionadas:
-        info = CidadeDespesa.objects.filter(cidade=cidade, despesa=despesa, nivel=1)
+        info = CidadeDespesa.objects.filter(cidade=cidade, despesa=despesa, nivel=nivel)
         print info
         print info.cidade
         sigla = info.cidade.pais.cotacao.sigla

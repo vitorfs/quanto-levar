@@ -7,6 +7,11 @@
   <form action="{% url 'calculo' %}" method="get">
     <input type="hidden" id="cidade" name="cidade" value="{{ cidade }}" />
     <p>Dias de viagem <input type="text" id="dias" name="dias" /></p>
+    <p>
+        <input type="radio" id="nivel" name="nivel" value="1" checked="checked"/> Econômico
+        <input type="radio" id="nivel" name="nivel" value="2"/> Férias
+        <input type="radio" id="nivel" name="nivel" value="3"/> Ostentação
+    <p>
     {% for despesa in despesas %}
       <p><input id="despesas_selecionadas" name="despesas_selecionadas" type="checkbox" value="{{ despesa.despesa.id}}" checked="checked"/>{{ despesa.despesa.nome }}</p>
     {% empty %}
