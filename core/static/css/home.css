@@ -1,0 +1,85 @@
+@import url(http://fonts.googleapis.com/css?family=Sonsie+One);
+@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,400italic,600italic);
+
+/*
+Color Schema
+#006389 Azul escuro
+#00B1CF Azul médio
+#E5F7F9 Azul claro
+#92C35E Verde claro
+#333333 Preto
+*/
+
+body {
+  font-size: 62.5%;
+  color: #333333;
+  background: #00B1CF;
+  font-family: "Source Sans Pro", Tahoma, Arial, sans-serif;
+}
+
+header {
+  height: 20px;
+  background: #92C35E;
+}
+
+h1.title {
+  font-family: 'Sonsie One', cursive;
+  font-size: 7em;
+  color: #F9F9F9;
+  text-shadow: 1px 1px 0 #3A3D40;
+  margin-bottom: 1em;
+}
+
+section {
+  position: fixed;
+  width: 960px;
+  height: 200px;
+  top: 50%;
+  left: 50%;
+  margin-top: -100px;
+  margin-left: -480px;
+  text-align: center;
+}
+
+section input {
+  font-size: 2.4em;
+  border-radius: 5px;
+  border: 1px solid #CCCCCC;
+  padding: 0.4em 0.7em;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+  transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+  color: #3A3D40;
+  width: 440px;
+}
+
+section input:focus {
+  border-color: rgba(228, 247, 249, 0.8);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(228, 247, 249, 0.6);
+  outline: 0 none;
+}
+
+section button {
+  background-color: #92C35E;
+  border: none;
+  border-radius: 0.25em;
+  box-shadow: inset 0 -0.1em 0 #69A067;
+  color: #f3f2ee;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 2.4em;
+  outline: none;
+  padding: 0.0em 1em 0.05em 1em;
+  text-decoration: none;
+  line-height: 48px;
+  margin-left: 0.25em;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+}
+
+section button:hover {
+  background-color: #69A067;
+  box-shadow: inset 0 -0.1em 0 #92C35E;
+}

@@ -1,9 +1,22 @@
-{% extends 'base.html' %}
-
-{% block conteudo %}
-  <h1>Digite a cidade que deseja pesquisar</h1>
-  <br/>
-  <form action="{% url 'despesas' %}" method="get">
-    <input id="cidade" name="cidade" type="text" size="10"/><input type="submit" value="Procurar"/>
-  </form>
-{% endblock conteudo %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Quanto Levar?</title>
+  <link href="{{ STATIC_URL }}css/reset.css" rel="stylesheet" media="screen">
+  <link href="{{ STATIC_URL }}css/home.css" rel="stylesheet" media="screen">
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+</head>
+<body>
+  <header>
+    
+  </header>
+  <section>
+    <h1 class="title">Quanto Levar?</h1>
+    <form method="get" action="{% url 'despesas' %}">
+      <input type="text" placeholder="Buscar Cidade" name="cidade">
+      <button type="submit">Buscar</button>
+    </form>
+  </section>
+</body>
+</html>

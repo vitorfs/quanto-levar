@@ -5,8 +5,8 @@ def home(request):
     return render(request, 'core/home.html')
 
 def despesas(request):
-    cidade = request.GET.get('cidade')
-    lista_despesas = CidadeDespesa.objects.filter(cidade=cidade)
+    cidade = request.GET['cidade']
+    lista_despesas = CidadeDespesa.objects.filter(cidade__nome__iexact=cidade)
     return render(request, 'core/despesas.html', {'despesas': lista_despesas, "cidade": cidade})
 
 def calculo(request):
