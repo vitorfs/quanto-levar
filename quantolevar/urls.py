@@ -5,7 +5,8 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^$', 'core.views.home', name='home'),
-    url(r'^despesas/$', 'core.views.despesas', name='despesas'),
+    url(r'^buscar/$', 'core.views.buscar', name='buscar'),
     url(r'^calculo/$', 'core.views.calculo', name='calculo'),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^(?P<slug>[-\w]+)/$', 'core.views.cidade', name='cidade'),
 )

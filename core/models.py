@@ -28,6 +28,7 @@ class Cidade(models.Model):
     pais = models.ForeignKey(Pais)
     estado = models.CharField("Estado", max_length=255, null=True, blank=True)
     nome = models.CharField("Cidade", max_length=255)
+    slug = models.SlugField(max_length=255)
 
 class CidadeDespesa(models.Model):
     cidade = models.ForeignKey(Cidade)

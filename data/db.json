@@ -59,7 +59,8 @@
     "fields": {
       "pais": 1,
       "nome": "Buenos Aires",
-      "estado": ""
+      "estado": "",
+      "slug": "buenos-aires"
     }
   },
   {

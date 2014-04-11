@@ -5,7 +5,7 @@
 {% block conteudo %}
   <h1>Despesas</h1>
   <form action="{% url 'calculo' %}" method="get">
-    <input type="hidden" id="cidade" name="cidade" value="{{ cidade }}" />
+    <input type="hidden" id="cidade" name="cidade" value="{{ cidade.id }}" />
     <p>Dias de viagem <input type="text" id="dias" name="dias" /></p>
     <p>
         <input type="radio" id="nivel" name="nivel" value="1" checked="checked"/> Econômico

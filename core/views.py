@@ -1,13 +1,27 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.views.decorators.http import require_POST
 from core.models import *
 
 def home(request):
     return render(request, 'core/home.html')
 
-def despesas(request):
-    cidade = request.GET['cidade']
-    lista_despesas = CidadeDespesa.objects.filter(cidade__nome__iexact=cidade)
-    return render(request, 'core/despesas.html', {'despesas': lista_despesas, "cidade": cidade})
+@require_POST
+def buscar(request):
+    try:
+        nome_cidade = request.POST['cidade']
+        cidade = Cidade.objects.get(nome__iexact=nome_cidade)
+        url = u'/{0}/'.format(cidade.slug)
+        return redirect(url)
+    except Exception, e:
+        return redirect('/')
+
+def cidade(request, slug):
+    cidade = Cidade.objects.get(slug=slug)
+    despesas = CidadeDespesa.objects.filter(cidade__slug=slug)
+    return render(request, 'core/cidade.html', {
+        'despesas': despesas, 
+        'cidade': cidade
+        })
 
 def calculo(request):
     cidade = request.GET.get('cidade')
