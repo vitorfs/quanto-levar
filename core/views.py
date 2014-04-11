@@ -15,10 +15,10 @@ def calculo(request):
     nivel = request.GET.get('nivel')
     despesas_selecionadas = request.GET.get('despesas_selecionadas')
     for despesa in despesas_selecionadas:
-        info = CidadeDespesa.objects.filter(cidade=cidade, despesa=despesa, nivel=nivel)
+        info = CidadeDespesa.objects.get(cidade=cidade, despesa=despesa, nivel=nivel)
         print info
         print info.cidade
         sigla = info.cidade.pais.cotacao.sigla
         cotacao = info.cidade.pais.cotacao.valor
-        lista_valores.update({sigla, cotacao * info.valor})
+        lista_valores = {sigla : cotacao * info.valor }
     return render(request, 'core/calculo.html', {'valores': lista_valores, 'dias': dias, 'cidade': cidade})
