@@ -50,7 +50,8 @@
     "pk": 1,
     "fields": {
       "cotacao": "1",
-      "nome": "Argentina"
+      "nome": "Argentina",
+      "codigo": "AR"
     }
   },
   {
