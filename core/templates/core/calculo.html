@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load calculo %}
 
 {% block titulo %}Cálculo{% endblock %}
 
@@ -9,11 +10,13 @@
     <tr>
       <td>Moeda</td>
       <td>Valor</td>
+      <td>Valor / Dia</td>
     </tr>
-    {% for key, value in valores.iteritems %}
+    {% for chave, valor in valores.iteritems %}
     <tr>
-      <td>{{ key }}</td>
-      <td>{{ value }}</td>
+      <td>{{ chave }}</td>
+      <td>{{ valor|multiplicar:dias }}</td>
+      <td>{{ valor }}</td>
     </tr>
     {% endfor %}
   </table>

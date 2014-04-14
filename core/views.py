@@ -3,7 +3,13 @@ from django.views.decorators.http import require_POST
 from core.models import *
 
 def home(request):
-    return render(request, 'core/home.html')
+    cidades = Cidade.objects.all()
+    json = '['
+    for cidade in cidades:
+         json += '{ "nome": "'+cidade.nome+'" },'
+    json = json[:-1]
+    json += ']'
+    return render(request, 'core/home.html', {"cidades": json})
 
 @require_POST
 def buscar(request):
@@ -35,8 +41,8 @@ def calculo(request):
         cotacao = info.cidade.pais.cotacao.valor
         if sigla in lista_valores:
             lista_valores[sigla] += info.valor / cotacao
-            lista_valores["BRL"] += info.valor
+            lista_valores['BRL'] += info.valor
         else:
             lista_valores[sigla] = info.valor / cotacao
-            lista_valores["BRL"] = info.valor
+            lista_valores['BRL'] = info.valor
     return render(request, 'core/calculo.html', {'valores': lista_valores, 'dias': dias, 'cidade': cidade})
