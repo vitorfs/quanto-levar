@@ -45,4 +45,5 @@ def calculo(request):
         else:
             lista_valores[sigla] = info.valor / cotacao
             lista_valores['BRL'] = info.valor
-    return render(request, 'core/calculo.html', {'valores': lista_valores, 'dias': dias, 'cidade': cidade})
+    cidade = Cidade.objects.get(pk=cidade)
+    return render(request, 'core/calculo.html', {'valores': lista_valores, 'dias': dias, 'cidade': cidade.nome})
