@@ -15,7 +15,7 @@
     <form method="post" action="{% url 'buscar' %}">
       {% csrf_token %}
       <input type="text" placeholder="Buscar Cidade" name="cidade">
-      <button type="submit">Buscar</button>
+      <button type="submit" id="cidade">Buscar</button>
     </form>
   </section>
 </body>
