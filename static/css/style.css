@@ -10,23 +10,28 @@ body {
 
 header {
   background: #00B1CF;
-  height: 60px;
-  border-top: 15px solid #92C35E;
+  height: 160px;
+  border-top: 20px solid #92C35E;
   box-shadow: 0 0 5px rgba(0, 0, 0, .6);
 }
 
 header h1 {
   font-family: 'Sonsie One', cursive;
-  font-size: 3em;
-  color: #F9F9F9;
+  font-size: 7em;
   text-shadow: 1px 1px 0 #3A3D40;
-  padding-top: .4em;
+  padding-top: .6em;
   font-weight: 400;
   margin: 0;
+  text-align: center;
+}
+
+header h1 a {
+  color: #F9F9F9;
+  text-decoration: none;
 }
 
 .wrapper {
-  width: 960px;
+  width: 800px;
   margin: 0 auto;
 }
 
