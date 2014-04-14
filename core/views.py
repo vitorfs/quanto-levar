@@ -27,12 +27,16 @@ def calculo(request):
     cidade = request.GET.get('cidade')
     dias = request.GET.get('dias')
     nivel = request.GET.get('nivel')
-    despesas_selecionadas = request.GET.get('despesas_selecionadas')
+    despesas_selecionadas = request.GET.get('despesas_selecionadas', allow_multiple=True)
+    lista_valores = {}
     for despesa in despesas_selecionadas:
         info = CidadeDespesa.objects.get(cidade=cidade, despesa=despesa, nivel=nivel)
-        print info
-        print info.cidade
         sigla = info.cidade.pais.cotacao.sigla
         cotacao = info.cidade.pais.cotacao.valor
-        lista_valores = {sigla : cotacao * info.valor }
+        if sigla in lista_valores:
+            lista_valores[sigla] += info.valor / cotacao
+            lista_valores["BRL"] += info.valor
+        else:
+            lista_valores[sigla] = info.valor / cotacao
+            lista_valores["BRL"] = info.valor
     return render(request, 'core/calculo.html', {'valores': lista_valores, 'dias': dias, 'cidade': cidade})
