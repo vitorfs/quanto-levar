@@ -77,9 +77,20 @@ section button {
   -ms-appearance: none;
   -o-appearance: none;
   appearance: none;
+  width: 124px;
 }
 
 section button:hover {
   background-color: #69A067;
   box-shadow: inset 0 -0.1em 0 #92C35E;
+}
+
+section button:disabled {
+  background: #69A067;
+  box-shadow: inset 0 -0.1em 0 #92C35E;
+}
+
+
+.loading {
+  line-height: 48px;
 }
