@@ -3,7 +3,8 @@
 {% block titulo %}{{ cidade.nome }}{% endblock %}
 
 {% block conteudo %}
-  <form action="{% url 'calculo' %}" method="get">
+  <form action="{% url 'calculo' %}" method="post">
+    {% csrf_token %}
     <input type="hidden" id="cidade" name="cidade" value="{{ cidade.id }}" />
     <p>Dias de viagem <input type="text" id="dias" name="dias" /></p>
     <p>

@@ -24,10 +24,10 @@ def cidade(request, slug):
         })
 
 def calculo(request):
-    cidade = request.GET.get('cidade')
-    dias = request.GET.get('dias')
-    nivel = request.GET.get('nivel')
-    despesas_selecionadas = request.GET.get('despesas_selecionadas', allow_multiple=True)
+    cidade = request.POST.get('cidade')
+    dias = request.POST.get('dias')
+    nivel = request.POST.get('nivel')
+    despesas_selecionadas = request.POST.getlist('despesas_selecionadas')
     lista_valores = {}
     for despesa in despesas_selecionadas:
         info = CidadeDespesa.objects.get(cidade=cidade, despesa=despesa, nivel=nivel)
