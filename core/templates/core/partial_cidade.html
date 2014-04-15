@@ -10,15 +10,13 @@
       <input type="text" id="dias" name="dias">
     </div>
     <ul class="niveis">
-      <li><input type="radio" name="nivel" value="1" checked="checked"> Econômico</li>
-      <li><input type="radio" name="nivel" value="2"> Médio</li>
-      <li><input type="radio" name="nivel" value="3"> Caro</li>
+      {% for c, v in niveis.iteritems %}
+	      <li><input type="radio" name="nivel" value="{{ c }}" {% if forloop.counter == 1 %} checked="checked" {% endif %} > {{ v }}</li>
+      {% endfor %}
     </ul>
     <ul class="despesas">
     {% for despesa in despesas %}
       <li><input name="despesas-selecionadas" type="checkbox" value="{{ despesa.despesa.id}}" checked="checked"/>{{ despesa.despesa.nome }}</li>
-    {% empty %}
-      <li>Nenhuma despesa cadastrada para essa cidade.</li>
     {% endfor %}
     </ul>
     <button type="submit" id="calcular">Calcular</button>

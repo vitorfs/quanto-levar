@@ -6,7 +6,8 @@ from core.models import *
 
 def json_cidades():
     cidades = []
-    for cidade in Cidade.objects.all(): cidades.append(u'"{0}"'.format(cidade.nome))
+    for cidade in Cidade.objects.all(): 
+        cidades.append(u'"{0}"'.format(cidade.nome))
     return u'[{0}]'.format(','.join(cidades))
 
 def home(request):
@@ -24,7 +25,11 @@ def buscar(request):
             nome_cidade = request.POST['cidade']
             cidade = Cidade.objects.get(nome__iexact=nome_cidade)
             despesas = CidadeDespesa.objects.filter(cidade=cidade)
-            return render(request, 'core/partial_cidade.html', {'despesas': despesas, 'cidade': cidade})
+            niveis = {}
+            for despesa in despesas: 
+                niveis[despesa.nivel.id] = despesa.nivel.nome
+            print niveis
+            return render(request, 'core/partial_cidade.html', {'despesas': despesas, 'cidade': cidade, 'niveis': niveis})
         except Exception, e:
             return HttpResponseBadRequest()
     else:

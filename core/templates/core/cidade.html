@@ -3,5 +3,5 @@
 {% block titulo %}Quanto Levar Para {{ cidade.nome }}?{% endblock %}
 
 {% block conteudo %}
-  {% include 'core/partial_cidade.html' with cidade=cidade despesas=despesas %}
+  {% include 'core/partial_cidade.html' with cidade=cidade despesas=despesas niveis=niveis %}
 {% endblock conteudo %}
