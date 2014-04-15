@@ -15,6 +15,7 @@
     <h1 class="titulo">
       <a href="{% url 'home' %}">Quanto Levar?</a>
     </h1>
+    <button type="button" id="calcular" onclick="{% url 'colaborar' %}">Colabore</button>
     <div id="conteudo">
       {% block conteudo %}
       {% endblock conteudo %}

@@ -2,6 +2,7 @@ from django.http import HttpResponseBadRequest, HttpResponse
 from django.shortcuts import render, redirect
 from django.views.decorators.http import require_POST
 from core.decorators import ajax_required
+from recaptcha.client import captcha
 from core.models import *
 
 def json_cidades():
@@ -32,6 +33,28 @@ def buscar(request):
         return HttpResponse(url)
     except Exception, e:
         return HttpResponseBadRequest()
+    
+def colaborar(request):
+    return render(request, 'formulario.html')
+
+@require_POST
+def enviar(request):
+    cidade = request.POST['cidade']
+    estado = request.POST['estado']
+    print cidade
+    print estado
+    
+    if request.method == 'POST':
+        response = captcha.submit(
+        request.POST['recaptcha_challenge_field'],
+        request.POST['recaptcha_response_field'],
+        "6Lew2fESAAAAAKz04iu27K1TTXTDw-j5LlXqkiwE",
+        request.META.get('REMOTE_ADDR'))
+    if not response.is_valid:
+        print "INVALID!"
+    else:
+        print "VALID!"
+    return render(request, 'formulario.html')
 
 @require_POST
 def calculo(request, slug):
