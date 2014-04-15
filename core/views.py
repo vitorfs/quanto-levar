@@ -6,7 +6,7 @@ def home(request):
     cidades = Cidade.objects.all()
     json = '['
     for cidade in cidades:
-         json += '{ "nome": "'+cidade.nome+'" },'
+         json += '"'+cidade.nome+'",'
     json = json[:-1]
     json += ']'
     return render(request, 'core/home.html', {"cidades": json})

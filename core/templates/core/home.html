@@ -7,6 +7,7 @@
   <link href="{{ STATIC_URL }}css/home.css" rel="stylesheet" media="screen">
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}js/app.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/typeahead.bundle.js"></script>
 </head>
 <body>
   <header></header>
@@ -14,12 +15,50 @@
     <h1 class="title">Quanto Levar?</h1>
     <form method="post" action="{% url 'buscar' %}" id="buscar">
       {% csrf_token %}
+<<<<<<< HEAD
       <input type="text" placeholder="Buscar Cidade" name="cidade" id="cidade">
       <button type="submit" id="enviar">Buscar</button>
+=======
+      <input type="text" placeholder="Cidade" id="cidade" name="cidade" class="typeahead">
+      <button type="submit" id="cidade">Buscar</button>
+>>>>>>> c739a1fdad84f1a176cacb70edf750cd5386472d
     </form>
     <div id="conteudo">
       <h2>Para Buenos Aires</h2>
     </div>
   </section>
+  <script type="text/javascript">
+  var substringMatcher = function(strs) {
+	  return function findMatches(q, cb) {
+	    var matches, substringRegex;
+	    // an array that will be populated with substring matches
+	    matches = [];
+	    // regex used to determine if a string contains the substring `q`
+	    substrRegex = new RegExp(q, 'i');
+	    // iterate through the pool of strings and for any string that
+	    // contains the substring `q`, add it to the `matches` array
+	    $.each(strs, function(i, str) {
+	      if (substrRegex.test(str)) {
+	        // the typeahead jQuery plugin expects suggestions to a
+	        // JavaScript object, refer to typeahead docs for more info
+	        matches.push({ value: str });
+	      }
+	    });
+	    cb(matches);
+	  };
+	};
+	var states = [{{cidades|safe}}];
+	 
+	$('#cidade').typeahead({
+	  hint: true,
+	  highlight: true,
+	  minLength: 1
+	},
+	{
+	  name: 'states',
+	  displayKey: 'value',
+	  source: substringMatcher(states)
+	});
+  </script>
 </body>
 </html>
