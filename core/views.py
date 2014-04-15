@@ -12,6 +12,11 @@ def json_cidades():
 def home(request):
     return render(request, 'core/home.html', {"cidades": json_cidades()})
 
+def cidade(request, slug):
+    cidade = Cidade.objects.get(slug=slug)
+    despesas = CidadeDespesa.objects.filter(cidade__slug=slug)
+    return render(request, 'core/cidade.html', {'despesas': despesas, 'cidade': cidade})
+    
 @ajax_required
 def buscar(request):
     if request.method == 'POST':
@@ -25,11 +30,7 @@ def buscar(request):
     else:
         return render(request, 'core/partial_busca.html', {"cidades": json_cidades()})
 
-def cidade(request, slug):
-    cidade = Cidade.objects.get(slug=slug)
-    despesas = CidadeDespesa.objects.filter(cidade__slug=slug)
-    return render(request, 'core/cidade.html', {'despesas': despesas, 'cidade': cidade})
-
+@ajax_required
 def calculo(request):
     cidade = request.POST.get('cidade')
     dias = request.POST.get('dias')
