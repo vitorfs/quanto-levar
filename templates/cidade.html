@@ -18,22 +18,17 @@
           <li><input type="radio" name="nivel" value="{{ c }}" {% if forloop.counter == 1 %} checked="checked" {% endif %} > {{ v }}</li>
         {% endfor %}
       </ul>
-      <div class="legenda">
-        <span>Alimentação</span>
-      </div>
-      <ul class="despesas">
-      {% for despesa in despesas %}
-        <li><input name="despesas-selecionadas" type="checkbox" value="{{ despesa.despesa.id}}" checked="checked"/>{{ despesa.despesa.nome }}</li>
+      
+      {% regroup despesas by despesa.categoria as lista_despesas %}
+      {% for despesa in lista_despesas %}
+        <h4>{{ despesa.grouper }}</h4>
+        <ul class="despesas">
+          {% for item in despesa.list %}
+            <li><input name="despesas-selecionadas" type="checkbox" value="{{ item.despesa.id}}" checked="checked"/>{{ item.despesa.nome }}</li>
+          {% endfor %}
+        </ul>
       {% endfor %}
-      </ul>
       <button type="submit" id="calcular">Calcular</button>
     </form>
-    <script type="text/javascript">
-    $(".legenda").click(function () {
-        $legenda = $(this);
-        $conteudo = $legenda.next();
-        $conteudo.slideToggle(500, function () {});
-    });
-    </script>
   </div>
 {% endblock conteudo %}
