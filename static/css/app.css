@@ -42,6 +42,17 @@ h2 {
   text-shadow: 1px 1px 0 #3A3D40;
 }
 
+
+h3 {
+  font-size: 2em;
+  font-weight: 600;
+}
+
+h4 {
+  font-size: 1.8em;
+  font-weight: 600;
+}
+
 section {
   margin: 100px auto 0;
   width: 960px;
@@ -154,12 +165,15 @@ ul.niveis {
 
 ul.niveis li {
   display: inline;
-  font-size: 2em;
+  font-size: 1.6em;
   margin-right: 10px;
 }
 
 ul.despesas {
 	margin-bottom: 20px;
+  width: 200px;
+  text-align: left;
+  margin: 10px auto;
 }
 
 ul.despesas li {
@@ -173,11 +187,6 @@ ul.despesas li {
 #calcular {
   margin-top: 20px;
   width: 200px;
-}
-
-h3 {
-  font-size: 2em;
-  font-weight: 600;
 }
 
 table {

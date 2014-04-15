@@ -11,11 +11,12 @@ def json_cidades():
     return u'[{0}]'.format(','.join(cidades))
 
 def home(request):
-    return render(request, 'busca.html', {"cidades": json_cidades()})
+    return render(request, 'busca.html', {'cidades': json_cidades()})
 
 def cidade(request, slug):
     cidade = Cidade.objects.get(slug=slug)
-    despesas = CidadeDespesa.objects.filter(cidade__slug=slug)
+    ids = CidadeDespesa.objects.values('despesa').distinct()
+    despesas = CidadeDespesa.objects.filter(id__in=ids)
     niveis = {}
     for despesa in despesas: 
         niveis[despesa.nivel.id] = despesa.nivel.nome
