@@ -27,8 +27,12 @@ h1.titulo {
   font-size: 7em;
   text-shadow: 1px 1px 0 #3A3D40;
   margin-bottom: 0.25em;
+  
+}
+
+h1.titulo a {
   color: #F9F9F9;
-  cursor: pointer;
+  text-decoration: none;
 }
 
 h2 {

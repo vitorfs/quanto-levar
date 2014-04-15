@@ -1,4 +1,4 @@
-from django.http import HttpResponseBadRequest
+from django.http import HttpResponseBadRequest, HttpResponse
 from django.shortcuts import render, redirect
 from django.views.decorators.http import require_POST
 from core.decorators import ajax_required
@@ -11,31 +11,27 @@ def json_cidades():
     return u'[{0}]'.format(','.join(cidades))
 
 def home(request):
-    return render(request, 'core/home.html', {"cidades": json_cidades()})
+    return render(request, 'busca.html', {"cidades": json_cidades()})
 
 def cidade(request, slug):
     cidade = Cidade.objects.get(slug=slug)
     despesas = CidadeDespesa.objects.filter(cidade__slug=slug)
-    return render(request, 'core/cidade.html', {'despesas': despesas, 'cidade': cidade})
+    niveis = {}
+    for despesa in despesas: 
+        niveis[despesa.nivel.id] = despesa.nivel.nome
+    return render(request, 'cidade.html', {'despesas': despesas, 'cidade': cidade, 'niveis': niveis})
     
 @ajax_required
+@require_POST
 def buscar(request):
-    if request.method == 'POST':
-        try:
-            nome_cidade = request.POST['cidade']
-            cidade = Cidade.objects.get(nome__iexact=nome_cidade)
-            despesas = CidadeDespesa.objects.filter(cidade=cidade)
-            niveis = {}
-            for despesa in despesas: 
-                niveis[despesa.nivel.id] = despesa.nivel.nome
-            print niveis
-            return render(request, 'core/partial_cidade.html', {'despesas': despesas, 'cidade': cidade, 'niveis': niveis})
-        except Exception, e:
-            return HttpResponseBadRequest()
-    else:
-        return render(request, 'core/partial_busca.html', {"cidades": json_cidades()})
+    try:
+        nome_cidade = request.POST['cidade']
+        cidade = Cidade.objects.get(nome__iexact=nome_cidade)
+        url = u'/{0}/'.format(cidade.slug)
+        return HttpResponse(url)
+    except Exception, e:
+        return HttpResponseBadRequest()
 
-@ajax_required
 def calculo(request):
     cidade = request.POST.get('cidade')
     dias = request.POST.get('dias')
@@ -53,4 +49,4 @@ def calculo(request):
             lista_valores[sigla] = info.valor / cotacao
             lista_valores['BRL'] = info.valor
     cidade = Cidade.objects.get(pk=cidade)
-    return render(request, 'core/partial_calculo.html', {'valores': lista_valores, 'dias': dias, 'cidade': cidade})
+    return render(request, 'calculo.html', {'valores': lista_valores, 'dias': dias, 'cidade': cidade})
