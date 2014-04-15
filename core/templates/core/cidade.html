@@ -17,6 +17,6 @@
     {% empty %}
       <p>Nenhuma despesa cadastrada para essa cidade.</p>
     {% endfor %}
-    <input type="submit" value="Calcular"/>
+    <input type="submit" value="Calcular" onclick="return $('#dias').isValid();"/>
   </form>
 {% endblock conteudo %}

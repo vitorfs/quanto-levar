@@ -25,7 +25,7 @@ $(function () {
 
   $.fn.isValid = function () {
     var value = $(this).val();
-    return (!isNaN(value));
+    return !isNaN(value) && value == parseInt(value);
   };
 
 });
