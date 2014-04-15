@@ -1,9 +1,25 @@
 var LOADING = "<img src='/static/img/loading.gif' class='loading'>";
 
 $(function () {
-  $("#cidade").click(function () {
-    $(this).html(LOADING);
-    $(this).prop("disabled", true);
+  $("form#buscar").on("click", "#enviar", function () {
+    $.ajax({
+      url: '/',
+      type: 'get',
+      cache: false,
+      beforeSend: function () {
+        $("#enviar").html(LOADING);
+        $("#enviar").prop("disabled", true);
+        $("#cidade").prop("disabled", true);
+      },
+      success: function (data) {
+        $("#buscar").fadeOut();
+      },
+      complete: function () {
+        $("#enviar").html("Buscar");
+        $("#enviar").prop("disabled", false);
+        $("#cidade").prop("disabled", false);
+      }
+    });
     return false;
   });
 });
