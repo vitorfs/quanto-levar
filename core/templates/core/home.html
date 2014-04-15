@@ -15,13 +15,8 @@
     <h1 class="title">Quanto Levar?</h1>
     <form method="post" action="{% url 'buscar' %}" id="buscar">
       {% csrf_token %}
-<<<<<<< HEAD
-      <input type="text" placeholder="Buscar Cidade" name="cidade" id="cidade">
+      <input type="text" placeholder="Cidade" name="cidade" id="cidade" class="typeahead">
       <button type="submit" id="enviar">Buscar</button>
-=======
-      <input type="text" placeholder="Cidade" id="cidade" name="cidade" class="typeahead">
-      <button type="submit" id="cidade">Buscar</button>
->>>>>>> c739a1fdad84f1a176cacb70edf750cd5386472d
     </form>
     <div id="conteudo">
       <h2>Para Buenos Aires</h2>
