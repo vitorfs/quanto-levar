@@ -18,6 +18,9 @@
           <li><input type="radio" name="nivel" value="{{ c }}" {% if forloop.counter == 1 %} checked="checked" {% endif %} > {{ v }}</li>
         {% endfor %}
       </ul>
+      <div class="legenda">
+        <span>Alimentação</span>
+      </div>
       <ul class="despesas">
       {% for despesa in despesas %}
         <li><input name="despesas-selecionadas" type="checkbox" value="{{ despesa.despesa.id}}" checked="checked"/>{{ despesa.despesa.nome }}</li>
@@ -26,5 +29,12 @@
       <button type="submit" id="calcular">Calcular</button>
       <a href="#" class="link">Alterar Cidade</a>
     </form>
+    <script type="text/javascript">
+    $(".legenda").click(function () {
+        $legenda = $(this);
+        $conteudo = $legenda.next();
+        $conteudo.slideToggle(500, function () {});
+    });
+    </script>
   </div>
 {% endblock conteudo %}

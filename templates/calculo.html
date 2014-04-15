@@ -20,8 +20,8 @@
         {% for chave, valor in valores.iteritems %}
           <tr>
             <td>{{ chave }}</td>
-            <td>{{ valor|multiplicar:dias }}</td>
-            <td>{{ valor }}</td>
+            <td>{{ valor|multiplicar:dias|floatformat:"2" }}</td>
+            <td>{{ valor|floatformat:"2" }}</td>
           </tr>
         {% endfor %}
         </tbody>

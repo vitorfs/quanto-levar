@@ -4,8 +4,8 @@ register = template.Library()
 @register.filter
 def dividir(valor, arg):
     try:
-        valor = int(valor)
-        arg = int(arg)
+        valor = float(valor)
+        arg = float(arg)
         if arg: return valor / arg
     except: pass
     return ''
@@ -13,8 +13,8 @@ def dividir(valor, arg):
 @register.filter
 def multiplicar(valor, arg):
     try:
-        valor = int(valor)
-        arg = int(arg)
+        valor = float(valor)
+        arg = float(arg)
         if arg: return valor * arg
     except: pass
     return ''
