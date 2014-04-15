@@ -1,0 +1,31 @@
+<form method="post" action="{% url 'buscar' %}" id="buscar">
+  {% csrf_token %}
+  <input type="text" placeholder="Cidade" name="cidade" id="cidade" class="typeahead">
+  <button type="submit" id="enviar">Buscar</button>
+</form>
+<script type="text/javascript">
+  var cidades = {{cidades|safe}};
+  var substringMatcher = function(strs) {
+    return function findMatches(q, cb) {
+      var matches, substringRegex;
+      matches = [];
+      substrRegex = new RegExp(q, 'i');
+      $.each(strs, function(i, str) {
+        if (substrRegex.test(str)) {
+          matches.push({ value: str });
+        }
+      });
+      cb(matches);
+    };
+  };
+  $("#cidade").typeahead({
+    hint: true,
+    highlight: true,
+    minLength: 1
+  },
+  {
+    name: 'cidade',
+    displayKey: 'value',
+    source: substringMatcher(cidades)
+  });
+</script>

@@ -1,22 +1,7 @@
-{% extends 'base.html' %}
+{% extends 'core/home.html' %}
 
-{% block titulo %}{{ cidade.nome }}{% endblock %}
+{% block titulo %}Quanto Levar Para {{ cidade.nome }}?{% endblock %}
 
 {% block conteudo %}
-  <form action="{% url 'calculo' %}" method="post">
-    {% csrf_token %}
-    <input type="hidden" id="cidade" name="cidade" value="{{ cidade.id }}" />
-    <p>Dias de viagem <input type="text" id="dias" name="dias" /></p>
-    <p>
-        <input type="radio" id="nivel" name="nivel" value="1" checked="checked"/> Econômico
-        <input type="radio" id="nivel" name="nivel" value="2"/> Férias
-        <input type="radio" id="nivel" name="nivel" value="3"/> Ostentação
-    <p>
-    {% for despesa in despesas %}
-      <p><input id="despesas_selecionadas" name="despesas_selecionadas" type="checkbox" value="{{ despesa.despesa.id}}" checked="checked"/>{{ despesa.despesa.nome }}</p>
-    {% empty %}
-      <p>Nenhuma despesa cadastrada para essa cidade.</p>
-    {% endfor %}
-    <input type="submit" value="Calcular" onclick="return $('#dias').isValid();"/>
-  </form>
+  {% include 'core/partial_cidade.html' with cidade=cidade despesas=despesas %}
 {% endblock conteudo %}
