@@ -32,11 +32,12 @@ def buscar(request):
     except Exception, e:
         return HttpResponseBadRequest()
 
-def calculo(request):
-    cidade = request.POST.get('cidade')
+@require_POST
+def calculo(request, slug):
     dias = request.POST.get('dias')
     nivel = request.POST.get('nivel')
     despesas_selecionadas = request.POST.getlist('despesas-selecionadas')
+    cidade = Cidade.objects.get(slug=slug)
     lista_valores = {}
     for despesa in despesas_selecionadas:
         info = CidadeDespesa.objects.get(cidade=cidade, despesa=despesa, nivel=nivel)
@@ -48,5 +49,4 @@ def calculo(request):
         else:
             lista_valores[sigla] = info.valor / cotacao
             lista_valores['BRL'] = info.valor
-    cidade = Cidade.objects.get(pk=cidade)
     return render(request, 'calculo.html', {'valores': lista_valores, 'dias': dias, 'cidade': cidade})

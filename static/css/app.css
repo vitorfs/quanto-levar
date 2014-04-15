@@ -192,14 +192,14 @@ table tr {
   border-bottom: 1px solid #AAAAAA;
 }
 
-#voltar {
+.link {
   font-weight: 600;
   font-size: 1.8em;
   text-decoration: none;
   color: #00B1CF;
 }
 
-#voltar:hover {
+.link:hover {
   border-bottom: 1px solid;
 }
 
