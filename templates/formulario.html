@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Colabore com Quanto Levar!{% endblock %}
+
+{% block conteudo %}
+  <h2>Colabore!</h2>
+  <div class="container">
+    <div id="formulario">
+      <h3>Colabore com Quanto Levar</h3>
+      <form action="{% url 'enviar' %}" method="post">
+        {% csrf_token %}
+        <label for="cidade">Cidade</label>
+        <input type="text" id="cidade" name="cidade" />
+        <br />
+        <label for="estado">Estado</label>
+        <input type="text" id="estado" name="estado" />
+        <br />
+        <label for="pais">País</label>
+        <input type="text" id="pais" name="pais" />
+        <br />
+        <label for="msg">Mensagem</label>
+        <textarea rows="5" cols="10" id="msg" name="msg"></textarea>
+        <br />
+        <script type="text/javascript"
+		   src="http://api.recaptcha.net/challenge?k=6Lew2fESAAAAADIyxvzm_dS4WhePbJxXLcAyu9d-">
+		</script>		
+		<noscript>
+		   <iframe src="http://api.recaptcha.net/noscript?k=6Lew2fESAAAAADIyxvzm_dS4WhePbJxXLcAyu9d-"
+		       height="300" width="500" frameborder="0"></iframe><br>
+		   <textarea name="recaptcha_challenge_field" rows="3" cols="40">
+		   </textarea>
+		   <input type="hidden" name="recaptcha_response_field" 
+		       value="manual_challenge">
+		</noscript>
+        <button type="submit" id="enviar">Enviar</button>
+      </form>
+    </div>
+  </div>
+{% endblock conteudo %}
