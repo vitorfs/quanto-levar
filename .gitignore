@@ -57,3 +57,5 @@ docs/_build/
 *.sqlite3
 
 .env
+
+staticfiles
