@@ -44,4 +44,11 @@ $(function () {
       return false;
     }
   });
+
+  $(".niveis li input").click(function () {
+    $(".container-despesas div").hide();
+    $(".container-despesas div input[type='checkbox']").prop("checked", false);
+    $(".container-despesas div[nivel='" + $(this).val() + "'] input[type='checkbox']").prop("checked", true);
+    $(".container-despesas div[nivel='" + $(this).val() + "']").fadeIn();
+  });
 });

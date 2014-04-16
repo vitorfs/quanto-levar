@@ -18,12 +18,12 @@ def home(request):
 
 def cidade(request, slug):
     cidade = Cidade.objects.get(slug=slug)
-    ids = CidadeDespesa.objects.values('despesa').distinct()
-    despesas = CidadeDespesa.objects.filter(id__in=ids)
-    niveis = {}
-    for despesa in despesas: 
-        niveis[despesa.nivel.id] = despesa.nivel.nome
-    return render(request, 'cidade.html', {'despesas': despesas, 'cidade': cidade, 'niveis': niveis})
+    cidade_despesas = CidadeDespesa.objects.filter(cidade=cidade)
+    niveis = Nivel.objects.filter(id__in=cidade_despesas.values("nivel").distinct())
+    niveis_despesas = {}
+    for nivel in niveis:
+        niveis_despesas[nivel.id] = filter(lambda despesa: despesa.nivel.id == nivel.id, cidade_despesas)
+    return render(request, 'cidade.html', {'niveis_despesas': niveis_despesas, 'cidade': cidade, 'niveis': niveis})
     
 @ajax_required
 @require_POST

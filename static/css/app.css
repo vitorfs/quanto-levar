@@ -297,3 +297,7 @@ footer {
   margin: .5em 0 .25em;
   display: none;
 }
+
+.hide {
+  display: none;
+}
