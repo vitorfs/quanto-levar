@@ -4,7 +4,7 @@
   <form method="post" action="{% url 'buscar' %}" id="buscar">
     {% csrf_token %}
     <input type="text" placeholder="Cidade" name="cidade" id="cidade" class="typeahead">
-    <button type="submit" id="enviar">Buscar</button>
+    <button type="submit" id="enviar" class="btn">Buscar</button>
   </form>
   <script type="text/javascript">
     var cidades = {{cidades|safe}};

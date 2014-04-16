@@ -18,8 +18,7 @@ body {
 }
 
 header {
-  height: 20px;
-  background: #92C35E;
+  border-top: 20px solid #92C35E;
 }
 
 h1.titulo {
@@ -27,7 +26,8 @@ h1.titulo {
   font-size: 7em;
   text-shadow: 1px 1px 0 #3A3D40;
   margin-bottom: 0.25em;
-  
+  text-align: center;
+  margin-top: 1.8em;
 }
 
 h1.titulo a {
@@ -54,9 +54,12 @@ h4 {
 }
 
 section {
-  margin: 100px auto 0;
-  width: 960px;
   text-align: center;
+}
+
+.wrapper {
+  margin: 0 auto;
+  width: 960px;
 }
 
 section input[type="text"] {
@@ -83,7 +86,7 @@ section #buscar input:disabled {
   color: #999999;
 }
 
-section button {
+.btn {
   background-color: #92C35E;
   border: none;
   border-radius: 0.25em;
@@ -103,14 +106,15 @@ section button {
   -o-appearance: none;
   appearance: none;
   width: 124px;
+  text-align: center;
 }
 
-section button:hover {
+.btn:hover {
   background-color: #69A067;
   box-shadow: inset 0 -0.1em 0 #92C35E;
 }
 
-section button:disabled {
+.btn:disabled {
   background: #69A067;
   box-shadow: inset 0 -0.1em 0 #92C35E;
   cursor: pointer;
@@ -262,4 +266,20 @@ table tr {
 
 .twitter-typeahead .tt-suggestion.tt-cursor {
   color: #03739c;
-} 
+}
+
+footer {
+  padding: 30px 0;
+  text-align: center;
+}
+
+.colabore {
+  color: #F9F9F9;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 2em;
+}
+
+.colabore:hover {
+  text-shadow: 1px 1px 0 #3A3D40;
+}

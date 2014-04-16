@@ -10,17 +10,18 @@
   <script type="text/javascript" src="{{ STATIC_URL }}js/typeahead.bundle.js"></script>
 </head>
 <body>
-  <header></header>
-  <section>
-    <h1 class="titulo">
-      <a href="{% url 'home' %}">Quanto Levar?</a>
-    </h1>
-    <button type="button" id="calcular" onclick="{% url 'colaborar' %}">Colabore</button>
-    <div id="conteudo">
-      {% block conteudo %}
-      {% endblock conteudo %}
+  <header>
+    <div class="wrapper">
+      <h1 class="titulo"><a href="{% url 'home' %}">Quanto Levar?</a></h1>
     </div>
+  </header>
+  <section id="conteudo" class="wrapper">
+    {% block conteudo %}
+    {% endblock conteudo %}
   </section>
+  <footer class="wrapper">
+    <a href="{% url 'colaborar' %}" class="colabore">Colabore</a>
+  </footer>
   <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
