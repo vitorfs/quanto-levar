@@ -33,6 +33,7 @@ class Cotacao(models.Model):
     class Meta:
         verbose_name = 'Cotação'
         verbose_name_plural = 'Cotações'
+        ordering = ('sigla',)
 
     def __unicode__(self):
         return self.sigla

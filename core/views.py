@@ -76,3 +76,12 @@ def calculo(request, slug):
             lista_valores[sigla] = info.valor / cotacao
             lista_valores['BRL'] = info.valor
     return render(request, 'calculo.html', {'valores': lista_valores, 'dias': dias, 'cidade': cidade})
+
+def carregar_cotacoes(request):
+    Cotacao.atualizar_cotacao_banco_central()
+    cotacoes = Cotacao.objects.all()
+    html = u"<table border=1>"
+    for cotacao in cotacoes:
+        html += u"<tr><td>{0}</td><td>{1}</td></tr>".format(cotacao.sigla, cotacao.valor)
+    html += u"</table>"
+    return HttpResponse(u"<h1>Cotações atualizadas!</h1>" + html)
