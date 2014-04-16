@@ -27,7 +27,7 @@ DEBUG = config('DEBUG', default=True, cast=bool)
 
 TEMPLATE_DEBUG = DEBUG
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition
