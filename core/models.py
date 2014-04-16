@@ -1,6 +1,8 @@
 # coding: utf-8
 
 from django.db import models
+import urllib2
+from datetime import datetime, timedelta
 
 class Nivel(models.Model):
     nome = models.CharField('Nome', max_length=255)
@@ -34,6 +36,36 @@ class Cotacao(models.Model):
 
     def __unicode__(self):
         return self.sigla
+
+    @staticmethod
+    def obter_arquivo_csv(delta=0):
+        if delta > 10:
+            return ''
+        try:
+            now = datetime.now() - timedelta(days=delta)
+            data = now.strftime('%Y%m%d')
+            url = u'http://www4.bcb.gov.br/Download/fechamento/{0}.csv'.format(data)
+            response = urllib2.urlopen(url)
+            return response
+        except urllib2.HTTPError, e:
+            delta = delta + 1
+            return Cotacao.obter_arquivo_csv(delta)
+
+    @staticmethod
+    def atualizar_cotacao_banco_central():
+        response = Cotacao.obter_arquivo_csv()
+        if response:
+            csv = response.read()
+            rows = csv.split('\n')
+            for row in rows:
+                cols = row.split(';')
+                if len(cols) > 4:
+                    try:
+                        cotacao = Cotacao.objects.get(sigla=cols[3])
+                    except Exception, e:
+                        cotacao = Cotacao(sigla=cols[3])
+                    cotacao.valor = float(cols[4].replace(',', '.'))
+                    cotacao.save()
 
 
 class Despesa(models.Model):
