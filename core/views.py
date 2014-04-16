@@ -1,3 +1,5 @@
+# coding: utf-8
+
 from django.http import HttpResponseBadRequest, HttpResponse
 from django.shortcuts import render, redirect
 from django.views.decorators.http import require_POST
@@ -26,16 +28,16 @@ def cidade(request, slug):
 @ajax_required
 @require_POST
 def buscar(request):
+    nome_cidade = request.POST['cidade']
     try:
-        nome_cidade = request.POST['cidade']
         cidade = Cidade.objects.get(nome__iexact=nome_cidade)
         url = u'/{0}/'.format(cidade.slug)
         return HttpResponse(url)
     except Exception, e:
-        return HttpResponseBadRequest()
+        return HttpResponseBadRequest(u'Não encontramos nenhum registro para a cidade {0} :('.format(nome_cidade))
     
 def colaborar(request):
-    return render(request, 'formulario.html')
+    return render(request, 'colabore.html')
 
 @require_POST
 def enviar(request):
@@ -54,7 +56,7 @@ def enviar(request):
         print "INVALID!"
     else:
         print "VALID!"
-    return render(request, 'formulario.html')
+    return render(request, 'colabore.html')
 
 @require_POST
 def calculo(request, slug):

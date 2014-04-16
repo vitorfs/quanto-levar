@@ -1,19 +1,5 @@
 var LOADING = "<img src='/static/img/loading.gif' class='loading'>";
 
-var substringMatcher = function(strs) {
-  return function findMatches(q, cb) {
-    var matches, substringRegex;
-    matches = [];
-    substrRegex = new RegExp(q, 'i');
-    $.each(strs, function(i, str) {
-      if (substrRegex.test(str)) {
-        matches.push({ value: str });
-      }
-    });
-    cb(matches);
-  };
-};
-
 $.fn.isValid = function () {
   var value = $(this).val();
   return !isNaN(value) && value == parseInt(value);
@@ -36,6 +22,9 @@ $(function () {
           location.href=data;
         }
       },
+      error: function (jqXHR, textStatus, errorThrown) {
+        $(".erro-busca").html(jqXHR.responseText).hide().fadeIn();
+      },
       complete: function () {
         $("#enviar").html("Buscar");
         $("#enviar").prop("disabled", false);
@@ -46,11 +35,13 @@ $(function () {
   });
 
   $("#conteudo").on("click", "#calculo #calcular", function () {
-    return $("#dias").isValid();
+    if ($("#dias").isValid()) {
+      $(".erro-dias").fadeOut();
+    }
+    else {
+      $("#dias").focus();
+      $(".erro-dias").fadeIn();
+      return false;
+    }
   });
-
-  $("#cidade").typeahead(
-    {hint: true, highlight: true, minLength: 1},
-    {name: 'cidade', displayKey: 'value', source: substringMatcher(cidades)}
-    );
 });

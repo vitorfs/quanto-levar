@@ -7,11 +7,10 @@
   <div class="container">
     <form action="{% url 'calculo' cidade.slug %}" method="post" id="calculo">
       {% csrf_token %}
-      <input type="hidden" id="slug" value="{{ cidade.slug }}">
-      <input type="hidden" id="titulo-pagina" value="Quanto Levar Para {{ cidade.nome }}?">
       <div class="dias-viagem">
         <label for="dias">Dias de Viagem</label>
         <input type="text" id="dias" name="dias">
+        <div class="erro-dias">Informe o número de dias antes de prosseguir</div>
       </div>
       <ul class="niveis">
         {% for c, v in niveis.iteritems %}
