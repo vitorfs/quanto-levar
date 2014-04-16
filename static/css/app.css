@@ -283,11 +283,11 @@ footer {
 
 .erro-busca {
   font-size: 2em;
-  color: #DD6568;
+  color: #F9F9F9;
   font-weight: 600;
   margin: 1.5em 0;
   display: none;
-  text-shadow: 1px 1px 0 #5B0C0D;
+  text-shadow: 1px 1px 0 #3A3D40;
 }
 
 .erro-dias {
