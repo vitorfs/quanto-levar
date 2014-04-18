@@ -72,11 +72,11 @@ def calculo(request, slug):
         sigla = info.cidade.pais.cotacao.sigla
         cotacao = info.cidade.pais.cotacao.valor
         if sigla in lista_valores:
-            lista_valores[sigla] += info.valor / cotacao
-            lista_valores['BRL'] += info.valor
+            lista_valores[sigla] += info.valor
+            lista_valores['BRL'] += info.valor * cotacao
         else:
-            lista_valores[sigla] = info.valor / cotacao
-            lista_valores['BRL'] = info.valor
+            lista_valores[sigla] = info.valor
+            lista_valores['BRL'] = info.valor * cotacao
     return render(request, 'calculo.html', {'valores': lista_valores, 'dias': dias, 'cidade': cidade})
 
 def carregar_cotacoes(request):
