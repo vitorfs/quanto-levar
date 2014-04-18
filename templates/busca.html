@@ -4,7 +4,10 @@
   <form method="post" action="{% url 'buscar' %}" id="buscar">
     {% csrf_token %}
     <input type="text" placeholder="Cidade" name="cidade" id="cidade" class="typeahead">
-    <button type="submit" id="enviar" class="btn">Buscar</button>
+    <button type="submit" id="enviar" class="btn">
+      <span class="default-state">Buscar</span>
+      <span class="loading-state hide"><img src="{{ STATIC_URL }}img/loading.gif" class="loading"></span>
+    </button>
   </form>
   <div class="erro-busca wrapper"></div>
   <script type="text/javascript">
@@ -36,6 +39,8 @@
           displayKey: 'value', 
           source: substringMatcher(cidades)
         });
+
+      $("#cidade").focus();
     });
   </script>
 {% endblock conteudo %}

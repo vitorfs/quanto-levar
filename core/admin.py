@@ -1,31 +1,38 @@
 from django.contrib import admin
 from core.models import *
 
-class NivelAdmin(admin.ModelAdmin):
-  list_display = ('id', 'nome')
-  
-class CategoriaAdmin(admin.ModelAdmin):
-  list_display = ('id', 'nome')
-
 class CotacaoAdmin(admin.ModelAdmin):
-  list_display = ('id', 'sigla', 'valor')
+    list_display = ('sigla', 'valor',)
+    search_fields = ['sigla',]
   
 class DespesaAdmin(admin.ModelAdmin):
-  list_display = ('id', 'categoria', 'nome')
+    list_display = ('nome', 'categoria',)
+    list_filter = ['categoria',]
+
+class CidadeInline(admin.TabularInline):
+    model = Cidade
+    fields = ['nome', 'estado']
+    extra = 1
   
 class PaisAdmin(admin.ModelAdmin):
-  list_display = ('id', 'cotacao', 'nome')
-  
-class CidadeAdmin(admin.ModelAdmin):
-  list_display = ('id', 'pais', 'estado', 'nome')
-  
-class CidadeDespesaAdmin(admin.ModelAdmin):
-  list_display = ('id', 'cidade', 'despesa', 'nivel', 'valor')
+    list_display = ('nome', 'cotacao', 'codigo',)
+    search_fields = ['cotacao__sigla', 'nome', 'codigo']
+    inlines = [CidadeInline]
 
-admin.site.register(Nivel, NivelAdmin)
-admin.site.register(Categoria, CategoriaAdmin)
+class CidadeDespesaInline(admin.TabularInline):
+    model = CidadeDespesa
+    fields = ['despesa', 'nivel', 'valor']
+    extra = 1
+
+class CidadeAdmin(admin.ModelAdmin):
+    list_display = ('nome', 'estado', 'pais',)
+    list_filter = ['pais',]
+    search_fields = ['nome', 'estado', 'pais__nome']
+    inlines = [CidadeDespesaInline]
+
+admin.site.register(Nivel)
+admin.site.register(Categoria)
 admin.site.register(Cotacao, CotacaoAdmin)
 admin.site.register(Despesa, DespesaAdmin)
 admin.site.register(Pais, PaisAdmin)
 admin.site.register(Cidade, CidadeAdmin)
-admin.site.register(CidadeDespesa, CidadeDespesaAdmin)

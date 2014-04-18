@@ -10,6 +10,12 @@ Color Schema
 #333333 Preto
 */
 
+* {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
 body {
   font-size: 62.5%;
   color: #333333;
@@ -53,6 +59,26 @@ h4 {
   font-weight: 600;
 }
 
+small {
+  font-size: 0.3em;
+  vertical-align: middle;
+  text-shadow: 0px 0px;
+}
+
+.btn-link {
+  color: #F3F2EE;
+  text-decoration: none;
+  font-weight: 400;
+  letter-spacing: 1px;
+  background: #92C35E;
+  border-radius: 4px;
+  padding: 4px 10px;
+}
+
+.btn-link:hover {
+  background-color: #69A067;
+}
+
 section {
   text-align: center;
 }
@@ -62,7 +88,7 @@ section {
   width: 960px;
 }
 
-section input[type="text"] {
+section input[type="text"], section textarea {
   border-radius: 5px;
   border: 1px solid #CCCCCC;
   padding: 0.4em 0.7em;
@@ -76,7 +102,7 @@ section #buscar input {
   width: 440px;
 }
 
-section input[type="text"]:focus {
+section input[type="text"]:focus, section textarea:focus {
   border-color: rgba(228, 247, 249, 0.8);
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(228, 247, 249, 0.6);
   outline: 0 none;
@@ -91,7 +117,7 @@ section #buscar input:disabled {
   border: none;
   border-radius: 0.25em;
   box-shadow: inset 0 -0.1em 0 #69A067;
-  color: #f3f2ee;
+  color: #F3F2EE;
   cursor: pointer;
   display: inline-block;
   font-size: 2.4em;
@@ -135,7 +161,7 @@ section #buscar input:disabled {
 .container {
   border-radius: 8px;
   background: #E5F7F9;
-  width: 500px;
+  width: 560px;
   margin: 20px auto;
   padding: 30px;
   min-height: 220px;
@@ -152,7 +178,7 @@ section #buscar input:disabled {
 }
 
 .dias-viagem input[type="text"] {
-  width: 40px;
+  width: 50px;
   font-size: 1.8em;
   margin-left: 10px;
   text-align: center;
@@ -271,14 +297,7 @@ table tr {
 footer {
   padding: 30px 0;
   text-align: center;
-}
-
-.colabore {
-  color: #F9F9F9;
-  font-weight: 600;
-  text-decoration: none;
-  font-size: 2em;
-  text-shadow: 1px 1px 0 #3A3D40;
+  font-size: 1.6em;
 }
 
 .erro-busca {
@@ -300,4 +319,35 @@ footer {
 
 .hide {
   display: none;
+}
+
+.form-row {
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.form-row label {
+  display: block;
+  font-size: 1.6em;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.form-row input, .form-row textarea {
+  font-size: 1.4em;
+  width: 100%;
+}
+
+.form-row input[type="text"]:focus, .form-row textarea:focus {
+  border-color: rgba(0, 177, 207, 0.8);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(0, 177, 207, 0.6);
+}
+
+.form-set {
+  margin-bottom: 30px;
+  text-align: left;
+}
+
+.form-set h3 {
+  margin-bottom: 20px;
 }

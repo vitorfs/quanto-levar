@@ -3,36 +3,61 @@
 {% block titulo %}Colabore com Quanto Levar{% endblock %}
 
 {% block conteudo %}
+  <h2>Colabore</h2>
   <div class="container">
-    <div id="formulario">
-      <h3>Colabore com Quanto Levar</h3>
-      <form action="{% url 'enviar' %}" method="post">
-        {% csrf_token %}
-        <label for="cidade">Cidade</label>
-        <input type="text" id="cidade" name="cidade" />
-        <br />
-        <label for="estado">Estado</label>
-        <input type="text" id="estado" name="estado" />
-        <br />
-        <label for="pais">País</label>
-        <input type="text" id="pais" name="pais" />
-        <br />
-        <label for="msg">Mensagem</label>
-        <textarea rows="5" cols="10" id="msg" name="msg"></textarea>
-        <br />
-        <script type="text/javascript"
-		   src="http://api.recaptcha.net/challenge?k=6Lew2fESAAAAADIyxvzm_dS4WhePbJxXLcAyu9d-">
-		</script>		
-		<noscript>
-		   <iframe src="http://api.recaptcha.net/noscript?k=6Lew2fESAAAAADIyxvzm_dS4WhePbJxXLcAyu9d-"
-		       height="300" width="500" frameborder="0"></iframe><br>
-		   <textarea name="recaptcha_challenge_field" rows="3" cols="40">
-		   </textarea>
-		   <input type="hidden" name="recaptcha_response_field" 
-		       value="manual_challenge">
-		</noscript>
-        <button type="submit" id="enviar">Enviar</button>
-      </form>
-    </div>
+    <form action="{% url 'enviar' %}" method="post">
+      {% csrf_token %}
+      <div class="form-set">
+        <h3>Localidade</h3>
+        <div class="form-row">
+          <label for="cidade">Cidade</label>
+          <input type="text" id="cidade" name="cidade" />
+        </div>
+        <div class="form-row">
+          <label for="estado">Estado</label>
+          <input type="text" id="estado" name="estado" />
+        </div>
+        <div class="form-row">
+          <label for="pais">País</label>
+          <input type="text" id="pais" name="pais" />
+        </div>
+        <div class="form-row">
+          <label for="moeda">Moeda Local</label>
+          <input type="text" id="moeda" name="moeda" />
+        </div>
+      </div>
+      {% for nivel in niveis %}
+        <div class="form-set">
+          <h3>{{ nivel }}</h3>
+          {% for despesa in despesas %}
+            <div class="form-row">
+              <label for="{{ nivel.id }}-{{ despesa.id }}">{{ despesa.nome }}</label>
+              <input type="text" id="{{ nivel.id }}-{{ despesa.id }}" name="{{ nivel.id }}-{{ despesa.id }}">
+            </div>
+          {% endfor %}
+        </div>
+      {% endfor %}
+      <div class="form-set">
+        <h3>Informações Adicionais</h3>
+        <div class="form-row">
+          <textarea id="info-adicionais" name="info-adicionais" rows="10"></textarea>
+        </div>
+      </div>
+      <div class="form-row">
+        <script type="text/javascript" src="http://api.recaptcha.net/challenge?k=6Lew2fESAAAAADIyxvzm_dS4WhePbJxXLcAyu9d-"></script>
+        <noscript>
+          <iframe 
+            src="http://api.recaptcha.net/noscript?k=6Lew2fESAAAAADIyxvzm_dS4WhePbJxXLcAyu9d-" 
+            height="300" 
+            width="500" 
+            frameborder="0">
+          </iframe>
+          <br>
+          <textarea name="recaptcha_challenge_field" rows="3" cols="40"></textarea>
+          <input type="hidden" name="recaptcha_response_field" value="manual_challenge">
+        </noscript>
+      </div>
+      <button type="submit" id="enviar" class="btn">Enviar</button>
+    </form>
   </div>
 {% endblock conteudo %}

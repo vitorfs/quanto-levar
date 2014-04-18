@@ -3,7 +3,7 @@
 {% block titulo %}Quanto Levar Para {{ cidade.nome }}?{% endblock %}
 
 {% block conteudo %}
-  <h2>Para {{ cidade.nome }}</h2>
+  <h2>Para {{ cidade.nome }} <small><a href="{% url 'home' %}" class="btn-link">Alterar</a></small></h2>
   <div class="container">
     <form action="{% url 'calculo' cidade.slug %}" method="post" id="calculo">
       {% csrf_token %}
@@ -25,7 +25,7 @@
               <h4>{{ despesa.grouper }}</h4>
               <ul class="despesas">
                 {% for item in despesa.list %}
-                  <li><input name="despesas-selecionadas" type="checkbox" value="{{ item.despesa.id}}" checked="checked"/>{{ item.despesa.nome }}</li>
+                  <li><input name="despesas-selecionadas" type="checkbox" value="{{ item.despesa.id}}">{{ item.despesa.nome }}</li>
                 {% endfor %}
               </ul>
             {% endfor %}

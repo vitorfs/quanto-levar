@@ -1,11 +1,10 @@
-var LOADING = "<img src='/static/img/loading.gif' class='loading'>";
-
 $.fn.isValid = function () {
   var value = $(this).val();
   return !isNaN(value) && value == parseInt(value);
 };
 
 $(function () {
+
   $("#conteudo").on("click", "#buscar #enviar", function () {
     $.ajax({
       url: '/buscar/',
@@ -13,7 +12,8 @@ $(function () {
       type: 'post',
       cache: false,
       beforeSend: function () {
-        $("#enviar").html(LOADING);
+        $("#enviar span").hide();
+        $("#enviar span.loading-state").show();
         $("#enviar").prop("disabled", true);
         $("#cidade").prop("disabled", true);
       },
@@ -24,9 +24,10 @@ $(function () {
       },
       error: function (jqXHR, textStatus, errorThrown) {
         $(".erro-busca").html(jqXHR.responseText).hide().fadeIn();
+        $("#enviar span").hide();
+        $("#enviar span.default-state").show();
       },
       complete: function () {
-        $("#enviar").html("Buscar");
         $("#enviar").prop("disabled", false);
         $("#cidade").prop("disabled", false);
       }

@@ -120,3 +120,6 @@ class CidadeDespesa(models.Model):
     
     def __unicode__(self):
         return u'{0} - {1}'.format(self.cidade.nome, self.despesa.nome)
+
+    def pais(self):
+        return self.cidade.pais

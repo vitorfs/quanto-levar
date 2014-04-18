@@ -36,8 +36,10 @@ def buscar(request):
     except Exception, e:
         return HttpResponseBadRequest(u'Não encontramos nenhum registro para a cidade {0} :('.format(nome_cidade))
     
-def colaborar(request):
-    return render(request, 'colabore.html')
+def colabore(request):
+    niveis = Nivel.objects.all()
+    despesas = Despesa.objects.all()
+    return render(request, 'colabore.html', {'niveis': niveis, 'despesas': despesas})
 
 @require_POST
 def enviar(request):
@@ -79,9 +81,4 @@ def calculo(request, slug):
 
 def carregar_cotacoes(request):
     Cotacao.atualizar_cotacao_banco_central()
-    cotacoes = Cotacao.objects.all()
-    html = u"<table border=1>"
-    for cotacao in cotacoes:
-        html += u"<tr><td>{0}</td><td>{1}</td></tr>".format(cotacao.sigla, cotacao.valor)
-    html += u"</table>"
-    return HttpResponse(u"<h1>Cotações atualizadas!</h1>" + html)
+    return HttpResponse()
