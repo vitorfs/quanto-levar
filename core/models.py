@@ -74,8 +74,9 @@ class Despesa(models.Model):
     nome = models.CharField('Nome', max_length=255)
     
     class Meta:
-        verbose_name = 'Tipo de Despesa'
-        verbose_name_plural = 'Tipos de Despesas'
+        verbose_name = 'Despesa'
+        verbose_name_plural = 'Despesas'
+        ordering = ('nome',)
 
     def __unicode__(self):
         return self.nome
@@ -89,6 +90,7 @@ class Pais(models.Model):
     class Meta:
         verbose_name = 'País'
         verbose_name_plural = 'Países'
+        ordering = ('nome',)
 
     def __unicode__(self):
         return self.nome
@@ -103,6 +105,7 @@ class Cidade(models.Model):
     class Meta:
         verbose_name = 'Cidade'
         verbose_name_plural = 'Cidades'
+        ordering = ('nome',)
 
     def __unicode__(self):
         return self.nome
@@ -115,11 +118,12 @@ class CidadeDespesa(models.Model):
     valor = models.FloatField('Valor')
     
     class Meta:
-        verbose_name = 'Despesa'
-        verbose_name_plural = 'Despesas'
+        verbose_name = 'Despesa de Cidade'
+        verbose_name_plural = 'Despesas de Cidades'
+        ordering = ('cidade__nome', 'nivel__nome', 'despesa__categoria__nome', 'despesa__nome')
     
     def __unicode__(self):
-        return u'{0} - {1}'.format(self.cidade.nome, self.despesa.nome)
+        return u'{0} - {1}'.format(self.despesa.nome, self.nivel.nome)
 
     def pais(self):
         return self.cidade.pais
