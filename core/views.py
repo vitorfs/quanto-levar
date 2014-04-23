@@ -71,13 +71,17 @@ def calculo(request, slug):
         info = CidadeDespesa.objects.get(cidade=cidade, despesa=despesa, nivel=nivel)
         sigla = info.cidade.pais.cotacao.sigla
         cotacao = info.cidade.pais.cotacao.valor
+        categoria = info.despesa.categoria.nome
         if sigla in lista_valores:
-            lista_valores[sigla] += info.valor
-            lista_valores['BRL'] += info.valor * cotacao
+            lista_valores[categoria, sigla] += info.valor
+            if sigla != 'BRL':
+                lista_valores[categoria, 'BRL'] += info.valor * cotacao
         else:
-            lista_valores[sigla] = info.valor
-            lista_valores['BRL'] = info.valor * cotacao
-    return render(request, 'calculo.html', {'valores': lista_valores, 'dias': dias, 'cidade': cidade})
+            lista_valores[categoria, sigla] = info.valor
+            if sigla != 'BRL':
+                lista_valores[categoria, 'BRL'] = info.valor * cotacao
+    nivel = Nivel.objects.get(pk=nivel)
+    return render(request, 'calculo.html', {'valores': lista_valores, 'dias': dias, 'cidade': cidade, 'nivel': nivel})
 
 def carregar_cotacoes(request):
     Cotacao.atualizar_cotacao_banco_central()

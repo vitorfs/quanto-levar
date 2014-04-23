@@ -7,10 +7,11 @@
   <h2>Para {{ cidade.nome }}</h2>
   <div class="container">
     <div id="resultado-calculo">
-      <h3>O cálculo para {{ dias }} dia(s) em {{ cidade.nome }} é</h3>
+      <h3>O cálculo para {{ dias }} dia(s) em {{ cidade.nome }} com nível {{ nivel.nome }} é</h3>
       <table>
         <thead>
           <tr>
+            <th>Categoria</th>
             <th>Moeda</th>
             <th>Valor</th>
             <th>Valor/Dia</th>
@@ -19,7 +20,8 @@
         <tbody>
         {% for chave, valor in valores.iteritems %}
           <tr>
-            <td>{{ chave }}</td>
+            <td>{{ chave.0 }}</td>
+            <td>{{ chave.1 }}</td>
             <td>{{ valor|multiplicar:dias|floatformat:"2" }}</td>
             <td>{{ valor|floatformat:"2" }}</td>
           </tr>
