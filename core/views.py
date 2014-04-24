@@ -67,6 +67,7 @@ def calculo(request, slug):
     despesas_selecionadas = request.POST.getlist('despesas-selecionadas')
     cidade = Cidade.objects.get(slug=slug)
     lista_valores = {}
+    transportes = {}
     for despesa in despesas_selecionadas:
         info = CidadeDespesa.objects.get(cidade=cidade, despesa=despesa, nivel=nivel)
         sigla = info.cidade.pais.cotacao.sigla
@@ -74,18 +75,25 @@ def calculo(request, slug):
         categoria = info.despesa.categoria.nome
         if categoria == "Hospedagem":
             tipo_hospedagem = Despesa.objects.get(id=despesa)
-        if categoria not in lista_valores:
-            lista_valores[categoria] = {}
-        if sigla in lista_valores[categoria]:
-            lista_valores[categoria][sigla] += info.valor
-            if sigla != 'BRL':
-                lista_valores[categoria]['BRL'] += info.valor * cotacao
+        if categoria != "Transporte":
+            if categoria not in lista_valores:
+                lista_valores[categoria] = {}
+            if sigla in lista_valores[categoria]:
+                lista_valores[categoria][sigla] += info.valor
+                if sigla != 'BRL':
+                    lista_valores[categoria]['BRL'] += info.valor * cotacao
+            else:
+                lista_valores[categoria][sigla] = info.valor
+                if sigla != 'BRL':
+                    lista_valores[categoria]['BRL'] = info.valor * cotacao
         else:
-            lista_valores[categoria][sigla] = info.valor
-            if sigla != 'BRL':
-                lista_valores[categoria]['BRL'] = info.valor * cotacao
+            tipo_transporte = Despesa.objects.get(id=despesa)
+            if tipo_transporte.nome not in transportes:
+                transportes[tipo_transporte.nome] = {}
+            transportes[tipo_transporte.nome][sigla] = info.valor
+            transportes[tipo_transporte.nome]['BRL'] = info.valor * cotacao
     nivel = Nivel.objects.get(pk=nivel)
-    return render(request, 'calculo.html', {'valores': lista_valores, 'dias': dias, 'cidade': cidade, 'nivel': nivel, 'tipo_hospedagem': tipo_hospedagem})
+    return render(request, 'calculo.html', {'valores': lista_valores, 'dias': dias, 'cidade': cidade, 'nivel': nivel, 'transportes': transportes, 'tipo_hospedagem': tipo_hospedagem})
 
 def carregar_cotacoes(request):
     Cotacao.atualizar_cotacao_banco_central()
