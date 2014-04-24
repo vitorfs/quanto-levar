@@ -33,9 +33,8 @@ def buscar(request):
         return HttpResponseBadRequest(u'Não encontramos nenhum registro para a cidade {0} :('.format(nome_cidade))
     
 def colabore(request):
-    niveis = Nivel.objects.all()
     despesas = TipoDespesa.objects.all()
-    return render(request, 'colabore.html', {'niveis': niveis, 'despesas': despesas})
+    return render(request, 'colabore.html', {'despesas': despesas})
 
 @require_POST
 def enviar(request):

@@ -375,3 +375,24 @@ footer {
   font-weight: 600;
   text-align: center;
 }
+
+.colabore a {
+  background: #F75F23;
+  color: #F9F9F9;
+  text-decoration: none;
+  font-size: 2em;
+  font-weight: 600;
+  top: 0;
+  float: right;
+  border-bottom-right-radius: 7px;
+  border-bottom-left-radius: 7px;
+  padding: .8em;
+  margin-top: -23px;
+  box-shadow: inset 0 -0.125em 0 #C0352C;
+  margin-right: 80px;
+}
+
+.colabore a:hover {
+  background: #C0352C;
+  box-shadow: inset 0 -0.125em 0 #F75F23;
+}
