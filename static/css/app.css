@@ -1,3 +1,4 @@
+@import url(reset.css);
 @import url(http://fonts.googleapis.com/css?family=Sonsie+One);
 @import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,400italic,600italic);
 
@@ -190,12 +191,12 @@ section #buscar input:disabled {
 }
 
 ul.niveis {
-  margin-bottom: 20px;
+  margin: 10px 0;
 }
 
 ul.niveis li {
   display: inline;
-  font-size: 1.6em;
+  font-size: 1.4em;
   margin-right: 10px;
 }
 
@@ -207,11 +208,11 @@ ul.despesas {
 }
 
 ul.despesas li {
-  font-size: 2em;
+  font-size: 1.4em;
 }
 
-ul.despesas li {
-  font-size: 1.4em;
+ul.despesas li input {
+  margin-right: .6em;
 }
 
 #calcular {

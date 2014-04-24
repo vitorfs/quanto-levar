@@ -4,7 +4,6 @@ from django.db import models
 import urllib2
 from datetime import datetime, timedelta
 
-
 class Cotacao(models.Model):
     sigla = models.CharField(max_length=3, unique=True)
     valor = models.FloatField('Valor')
@@ -48,29 +47,6 @@ class Cotacao(models.Model):
                     cotacao.save()
 
 
-class Despesa(models.Model):
-    ALIMENTACAO = 'A'
-    TRANSPORTE = 'T'
-    HOSPEDAGEM = 'H'
-
-    CATEGORIAS = (
-        (ALIMENTACAO, 'Alimentação'),
-        (TRANSPORTE, 'Transporte'),
-        (HOSPEDAGEM, 'Hospedagem'),
-        )
-
-    categoria = models.CharField(max_length=1, choices=CATEGORIAS)
-    nome = models.CharField('Nome', max_length=255)
-    
-    class Meta:
-        verbose_name = 'Despesa'
-        verbose_name_plural = 'Despesas'
-        ordering = ('nome',)
-
-    def __unicode__(self):
-        return self.nome
-
-
 class Pais(models.Model):
     cotacao = models.ForeignKey(Cotacao)
     nome = models.CharField('Nome', max_length=255)
@@ -99,32 +75,78 @@ class Cidade(models.Model):
     def __unicode__(self):
         return self.nome
 
-    def listar_despesas(self):
-        return CidadeDespesa.objects.filter(cidade=self)
+    def _listar_despesas(self, categoria):
+        '''
+            Método privado para retornar apenas tipos de despesas cadastradas para a cidade
+        '''
+        despesas = Despesa.objects.filter(cidade=self, tipo_despesa__categoria=categoria)
+        tipos_despesas = []
+        for despesa in despesas:
+            tipos_despesas.append(despesa.tipo_despesa)
+        return set(tipos_despesas)
+
+    def listar_alimentacao(self):
+        return self._listar_despesas(TipoDespesa.ALIMENTACAO)
+
+    def listar_transporte(self):
+        return self._listar_despesas(TipoDespesa.TRANSPORTE)
+
+    def listar_hospedagem(self):
+        return self._listar_despesas(TipoDespesa.HOSPEDAGEM)
+
+    def listar_niveis_alimentacao(self):
+        despesas = Despesa.objects.filter(cidade=self).exclude(nivel__isnull=True)
+        niveis = {}
+        for despesa in despesas:
+            niveis[despesa.nivel] = despesa.get_nivel_display()
+        return niveis
 
 
-class CidadeDespesa(models.Model):
+class TipoDespesa(models.Model):
+    ALIMENTACAO = 'A'
+    TRANSPORTE = 'T'
+    HOSPEDAGEM = 'H'
+
+    CATEGORIAS = (
+        (ALIMENTACAO, u'Alimentação'),
+        (TRANSPORTE, u'Transporte'),
+        (HOSPEDAGEM, u'Hospedagem'),
+        )
+
+    categoria = models.CharField(max_length=1, choices=CATEGORIAS)
+    nome = models.CharField('Nome', max_length=255)
+    
+    class Meta:
+        verbose_name = 'Tipo de Despesa'
+        verbose_name_plural = 'Tipos de Despesas'
+        ordering = ('nome',)
+
+    def __unicode__(self):
+        return self.nome
+
+
+class Despesa(models.Model):
     ECONOMICO = 'E'
     MODERADO = 'M'
     CARO = 'C'
 
     NIVEIS = (
-        (ECONOMICO, 'Econômico'),
-        (MODERADO, 'Moderado'),
-        (CARO, 'Caro'),
+        (ECONOMICO, u'Econômico'),
+        (MODERADO, u'Moderado'),
+        (CARO, u'Caro'),
         )
 
     cidade = models.ForeignKey(Cidade)
-    despesa = models.ForeignKey(Despesa)
-    nivel = models.CharField(max_length=1, choices=NIVEIS)
+    tipo_despesa = models.ForeignKey(TipoDespesa)
+    nivel = models.CharField(max_length=1, choices=NIVEIS, blank=True, null=True)
     valor = models.FloatField('Valor')
     
     class Meta:
-        verbose_name = 'Despesa de Cidade'
-        verbose_name_plural = 'Despesas de Cidades'
+        verbose_name = 'Despesa'
+        verbose_name_plural = 'Despesas'
     
     def __unicode__(self):
-        return u'{0} - {1}'.format(self.despesa.nome, self.get_nivel_display())
+        return self.tipo_despesa.nome
 
     def pais(self):
         return self.cidade.pais

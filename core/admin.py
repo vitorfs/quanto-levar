@@ -5,7 +5,7 @@ class CotacaoAdmin(admin.ModelAdmin):
     list_display = ('sigla', 'valor',)
     search_fields = ['sigla',]
   
-class DespesaAdmin(admin.ModelAdmin):
+class TipoDespesaAdmin(admin.ModelAdmin):
     list_display = ('nome', 'categoria',)
     list_filter = ['categoria',]
 
@@ -19,18 +19,18 @@ class PaisAdmin(admin.ModelAdmin):
     search_fields = ['cotacao__sigla', 'nome', 'codigo']
     inlines = [CidadeInline]
 
-class CidadeDespesaInline(admin.TabularInline):
-    model = CidadeDespesa
-    fields = ['despesa', 'nivel', 'valor']
+class DespesaInline(admin.TabularInline):
+    model = Despesa
+    fields = ['tipo_despesa', 'nivel', 'valor']
     extra = 1
 
 class CidadeAdmin(admin.ModelAdmin):
     list_display = ('nome', 'estado', 'pais',)
     list_filter = ['pais',]
     search_fields = ['nome', 'estado', 'pais__nome']
-    inlines = [CidadeDespesaInline]
+    inlines = [DespesaInline]
 
 admin.site.register(Cotacao, CotacaoAdmin)
-admin.site.register(Despesa, DespesaAdmin)
+admin.site.register(TipoDespesa, TipoDespesaAdmin)
 admin.site.register(Pais, PaisAdmin)
 admin.site.register(Cidade, CidadeAdmin)

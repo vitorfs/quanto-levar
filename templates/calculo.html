@@ -7,7 +7,33 @@
   <h2>Para {{ cidade.nome }} <small><a href="{% url 'home' %}" class="btn-link">Alterar</a></small></h2>
   <div class="container">
     <div id="resultado-calculo">
-      <h3>Quanto levar para {{ dias }} dia(s) em {{ cidade.nome }} em nível {{ nivel.nome }}...</h3>
+      <h3>Quanto levar para {{ dias }} dia(s) em {{ cidade.nome }}...</h3>
+
+      {% for sigla, categorias in valores.iteritems %}
+        <table>
+          <thead>
+            <tr>
+              <th colspan="3">{{ sigla }}</th>
+            </tr>
+            <tr>
+              <th>Categoria</th>
+              <th>Valor/Dia</th>
+              <th>Valor Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for categoria, valor in categorias.iteritems %}
+              <tr>
+                <td>{{ categoria }}</td>
+                <td>{{ valor|floatformat:"2" }}</td>
+                <td>{{ valor|multiplicar:dias|floatformat:"2" }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% endfor %}
+
+      {% comment %}
       {% for categoria, siglas in valores.iteritems %}
       <table>
         <thead>
@@ -54,6 +80,7 @@
         </tbody>
       </table>
       {% endfor %}
+      {% endcomment %}
       <a href="{% url 'cidade' cidade.slug %}" class="link">Voltar</a>
     </div>
   </div>

@@ -16,7 +16,7 @@
     }
   },
   {
-    "model": "core.Despesa",
+    "model": "core.TipoDespesa",
     "pk": 1,
     "fields": {
       "categoria": "A",
@@ -24,7 +24,7 @@
     }
   },
   {
-    "model": "core.Despesa",
+    "model": "core.TipoDespesa",
     "pk": 2,
     "fields": {
       "categoria": "A",
@@ -51,21 +51,21 @@
     }
   },
   {
-    "model": "core.CidadeDespesa",
+    "model": "core.Despesa",
     "pk": 1,
     "fields": {
       "cidade": 1,
-      "despesa": 1,
+      "tipo_despesa": 1,
       "nivel": "E",
       "valor": 100 
     }
   },
   {
-    "model": "core.CidadeDespesa",
+    "model": "core.Despesa",
     "pk": 2,
     "fields": {
       "cidade": 1,
-      "despesa": 2,
+      "tipo_despesa": 2,
       "nivel": "E",
       "valor": 50 
     }

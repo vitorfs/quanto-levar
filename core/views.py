@@ -1,11 +1,12 @@
 # coding: utf-8
 
 from django.http import HttpResponseBadRequest, HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
 from core.decorators import ajax_required
 from recaptcha.client import captcha
 from core.models import *
+from django.db.models import Q
 
 def json_cidades():
     cidades = []
@@ -33,7 +34,7 @@ def buscar(request):
     
 def colabore(request):
     niveis = Nivel.objects.all()
-    despesas = Despesa.objects.all()
+    despesas = TipoDespesa.objects.all()
     return render(request, 'colabore.html', {'niveis': niveis, 'despesas': despesas})
 
 @require_POST
@@ -57,38 +58,67 @@ def enviar(request):
 
 @require_POST
 def calculo(request, slug):
+    cidade = get_object_or_404(Cidade, slug=slug)
+
     dias = request.POST.get('dias')
     nivel = request.POST.get('nivel')
-    despesas_selecionadas = request.POST.getlist('despesas-selecionadas')
-    cidade = Cidade.objects.get(slug=slug)
-    lista_valores = {}
-    transportes = {}
-    for despesa in despesas_selecionadas:
-        info = CidadeDespesa.objects.get(cidade=cidade, despesa=despesa, nivel=nivel)
-        sigla = info.cidade.pais.cotacao.sigla
-        cotacao = info.cidade.pais.cotacao.valor
-        categoria = info.despesa.categoria.nome
-        if categoria == "Hospedagem":
-            tipo_hospedagem = Despesa.objects.get(id=despesa)
-        if categoria != "Transporte":
-            if categoria not in lista_valores:
-                lista_valores[categoria] = {}
-            if sigla in lista_valores[categoria]:
-                lista_valores[categoria][sigla] += info.valor
-                if sigla != 'BRL':
-                    lista_valores[categoria]['BRL'] += info.valor * cotacao
-            else:
-                lista_valores[categoria][sigla] = info.valor
-                if sigla != 'BRL':
-                    lista_valores[categoria]['BRL'] = info.valor * cotacao
+    alimentacao = request.POST.getlist('alimentacao')
+    transporte = request.POST.getlist('transporte')
+    hospedagem = request.POST.get('hospedagem')
+
+    tipos_despesas = alimentacao + transporte + list(hospedagem)
+    despesas = Despesa.objects.filter(tipo_despesa__id__in=tipos_despesas).filter(Q(nivel=nivel) | Q(nivel=None))
+    
+    cotacao = cidade.pais.cotacao
+    valores = {'BRL':{}, cotacao.sigla:{}}
+
+    for despesa in despesas:
+        categoria = despesa.tipo_despesa.get_categoria_display()
+        if categoria in valores['BRL']:
+            valores['BRL'][categoria] += despesa.valor * cotacao.valor
         else:
-            tipo_transporte = Despesa.objects.get(id=despesa)
-            if tipo_transporte.nome not in transportes:
-                transportes[tipo_transporte.nome] = {}
-            transportes[tipo_transporte.nome][sigla] = info.valor
-            transportes[tipo_transporte.nome]['BRL'] = info.valor * cotacao
-    nivel = Nivel.objects.get(pk=nivel)
-    return render(request, 'calculo.html', {'valores': lista_valores, 'dias': dias, 'cidade': cidade, 'nivel': nivel, 'transportes': transportes, 'tipo_hospedagem': tipo_hospedagem})
+            valores['BRL'][categoria] = despesa.valor * cotacao.valor
+
+        if cotacao.sigla != 'BRL':
+            if categoria in valores[cotacao.sigla]:
+                valores[cotacao.sigla][categoria] += despesa.valor
+            else:
+                valores[cotacao.sigla][categoria] = despesa.valor
+    print valores
+    return render(request, 'calculo.html', {'valores': valores, 'dias': dias, 'cidade': cidade})
+
+#    dias = request.POST.get('dias')
+#    nivel = request.POST.get('nivel')
+#    despesas_selecionadas = request.POST.getlist('despesas-selecionadas')
+#    cidade = Cidade.objects.get(slug=slug)
+#    lista_valores = {}
+#    transportes = {}
+#    for despesa in despesas_selecionadas:
+#        info = Despesa.objects.get(cidade=cidade, tipo_despesa=despesa, nivel=nivel)
+#        sigla = info.cidade.pais.cotacao.sigla
+#        cotacao = info.cidade.pais.cotacao.valor
+#        categoria = info.despesa.categoria.nome
+#        if categoria == "Hospedagem":
+#            tipo_hospedagem = TipoDespesa.objects.get(id=despesa)
+#        if categoria != "Transporte":
+#            if categoria not in lista_valores:
+#                lista_valores[categoria] = {}
+#            if sigla in lista_valores[categoria]:
+#                lista_valores[categoria][sigla] += info.valor
+#                if sigla != 'BRL':
+#                    lista_valores[categoria]['BRL'] += info.valor * cotacao
+#            else:
+#                lista_valores[categoria][sigla] = info.valor
+#                if sigla != 'BRL':
+#                    lista_valores[categoria]['BRL'] = info.valor * cotacao
+#        else:
+#            tipo_transporte = TipoDespesa.objects.get(id=despesa)
+#            if tipo_transporte.nome not in transportes:
+#                transportes[tipo_transporte.nome] = {}
+#            transportes[tipo_transporte.nome][sigla] = info.valor
+#            transportes[tipo_transporte.nome]['BRL'] = info.valor * cotacao
+#    nivel = Nivel.objects.get(pk=nivel)
+#    return render(request, 'calculo.html', {'valores': lista_valores, 'dias': dias, 'cidade': cidade, 'nivel': nivel, 'transportes': transportes, 'tipo_hospedagem': tipo_hospedagem})
 
 def carregar_cotacoes(request):
     Cotacao.atualizar_cotacao_banco_central()
