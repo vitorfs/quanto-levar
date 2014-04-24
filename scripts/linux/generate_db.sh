@@ -1,4 +1,4 @@
 #!/bin/bash
 
-cd ..
+cd ../..
 python manage.py syncdb

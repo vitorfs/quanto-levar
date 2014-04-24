@@ -67,25 +67,49 @@ def calculo(request, slug):
     hospedagem = request.POST.get('hospedagem')
 
     tipos_despesas = alimentacao + transporte + list(hospedagem)
-    despesas = Despesa.objects.filter(tipo_despesa__id__in=tipos_despesas).filter(Q(nivel=nivel) | Q(nivel=None))
+    despesas = Despesa.objects.filter(tipo_despesa__id__in=tipos_despesas).filter(Q(nivel=nivel, cidade=cidade) | Q(nivel=None))
     
     cotacao = cidade.pais.cotacao
-    valores = {'BRL':{}, cotacao.sigla:{}}
-
+    
+    resultado_alimentacao = {}
+    resultado_transporte = {}
+    resultado_hospedagem = {}
+    resultado_total = {}        
     for despesa in despesas:
-        categoria = despesa.tipo_despesa.get_categoria_display()
-        if categoria in valores['BRL']:
-            valores['BRL'][categoria] += despesa.valor * cotacao.valor
+        categoria = despesa.tipo_despesa.categoria
+        if categoria == TipoDespesa.ALIMENTACAO:
+            resultado_alimentacao[despesa.tipo_despesa.nome] = [despesa.valor * cotacao.valor, despesa.valor]
+        if categoria == TipoDespesa.TRANSPORTE:               
+            resultado_transporte[despesa.tipo_despesa.nome] = [despesa.valor * cotacao.valor, despesa.valor]
+        if categoria == TipoDespesa.HOSPEDAGEM:
+            resultado_hospedagem[despesa.tipo_despesa.nome] = [despesa.valor * cotacao.valor, despesa.valor]
+    for despesa, moedas in resultado_alimentacao.iteritems():
+        if (u'BRL' and cotacao.sigla) in resultado_total:
+            resultado_total[u'BRL'] += moedas[0]
+            resultado_total[cotacao.sigla] += moedas[1] 
         else:
-            valores['BRL'][categoria] = despesa.valor * cotacao.valor
+            resultado_total[u'BRL'] = moedas[0]
+            resultado_total[cotacao.sigla] = moedas[1]
+    for despesa, moedas in resultado_hospedagem.iteritems():
+        if (u'BRL' and cotacao.sigla) in resultado_total:
+            resultado_total[u'BRL'] += moedas[0]
+            resultado_total[cotacao.sigla] += moedas[1] 
+        else:
+            resultado_total[u'BRL'] = moedas[0]
+            resultado_total[cotacao.sigla] = moedas[1]
+            
+    if nivel == Despesa.ECONOMICO:
+        print "metrica para transporte em economico"
+    if nivel == Despesa.MODERADO:
+        print "metrica para transporte em moderado"
+    if nivel == Despesa.CARO:
+        print "metrica para transporte em caro"
 
-        if cotacao.sigla != 'BRL':
-            if categoria in valores[cotacao.sigla]:
-                valores[cotacao.sigla][categoria] += despesa.valor
-            else:
-                valores[cotacao.sigla][categoria] = despesa.valor
-    print valores
-    return render(request, 'calculo.html', {'valores': valores, 'dias': dias, 'cidade': cidade})
+    print resultado_alimentacao
+    print resultado_transporte
+    print resultado_hospedagem
+    print resultado_total
+    return render(request, 'calculo.html', {'resultado_alimentacao': resultado_alimentacao, 'resultado_transporte': resultado_transporte, 'resultado_hospedagem': resultado_hospedagem, 'resultado_total': resultado_total, 'cotacao_sigla': cotacao.sigla, 'dias': dias, 'cidade': cidade})
 
 #    dias = request.POST.get('dias')
 #    nivel = request.POST.get('nivel')
@@ -118,7 +142,7 @@ def calculo(request, slug):
 #            transportes[tipo_transporte.nome][sigla] = info.valor
 #            transportes[tipo_transporte.nome]['BRL'] = info.valor * cotacao
 #    nivel = Nivel.objects.get(pk=nivel)
-#    return render(request, 'calculo.html', {'valores': lista_valores, 'dias': dias, 'cidade': cidade, 'nivel': nivel, 'transportes': transportes, 'tipo_hospedagem': tipo_hospedagem})
+#    return render(request, 'calculo.html', {'resultado_alimentacao': lista_valores, 'dias': dias, 'cidade': cidade, 'nivel': nivel, 'transportes': transportes, 'tipo_hospedagem': tipo_hospedagem})
 
 def carregar_cotacoes(request):
     Cotacao.atualizar_cotacao_banco_central()

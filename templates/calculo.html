@@ -8,79 +8,98 @@
   <div class="container">
     <div id="resultado-calculo">
       <h3>Quanto levar para {{ dias }} dia(s) em {{ cidade.nome }}...</h3>
-
-      {% for sigla, categorias in valores.iteritems %}
+      {% if resultado_total %}
         <table>
           <thead>
             <tr>
-              <th colspan="3">{{ sigla }}</th>
+              <th colspan="3">...valor Total</th>
             </tr>
             <tr>
-              <th>Categoria</th>
+              <th>Moeda</th>
               <th>Valor/Dia</th>
               <th>Valor Total</th>
             </tr>
           </thead>
           <tbody>
-            {% for categoria, valor in categorias.iteritems %}
+            {% for moeda, valor in resultado_total.iteritems %}
               <tr>
-                <td>{{ categoria }}</td>
+                <td>{{ moeda }}</td>
                 <td>{{ valor|floatformat:"2" }}</td>
-                <td>{{ valor|multiplicar:dias|floatformat:"2" }}</td>
+                <td><b>{{ valor|multiplicar:dias|floatformat:"2" }}</b></td>     
               </tr>
             {% endfor %}
           </tbody>
         </table>
-      {% endfor %}
-
-      {% comment %}
-      {% for categoria, siglas in valores.iteritems %}
-      <table>
-        <thead>
-          <tr>
-            <th colspan="3">...para {{ categoria }} {% if categoria == "Hospedagem" %} ({{ tipo_hospedagem.nome }}) {% endif %}</th>
-          </tr>
-          <tr>
-            <th>Moeda</th>
-            <th>Valor Total</th>
-            <th>Valor/Dia</th>
-          </tr>
-        </thead>
-        <tbody>
-        {% for sigla, valor in siglas.iteritems %}
-          <tr>
-            <td>{{ sigla }}</td>
-            <td>{{ valor|multiplicar:dias|floatformat:"2" }}</td>
-            <td>{{ valor|floatformat:"2" }}</td>
-          </tr>
-        {% endfor %}
-        </tbody>
-      </table>
-      {% endfor %}
-      {% for transporte, siglas in transportes.iteritems %}
-      <table>
-        <thead>
-          <tr>
-            <th colspan="3">...para Transporte</th>
-          </tr>
-          <tr>
-            <th>Tipo</th>
-            <th>Moeda</th>
-            <th>Valor</th>
-          </tr>
-        </thead>
-        <tbody>
-        {% for sigla, valor in siglas.iteritems %}
-          <tr>
-            <td>{{ transporte }}</td>
-            <td>{{ sigla }}</td>
-            <td>{{ valor|floatformat:"2" }}</td>
-          </tr>
-        {% endfor %}
-        </tbody>
-      </table>
-      {% endfor %}
-      {% endcomment %}
+      {% endif %}
+      {% if resultado_alimentacao %}
+        <table>
+          <thead>
+            <tr>
+              <th colspan="3">...para Alimentacao</th>
+            </tr>
+            <tr>
+              <th>Refeicao</th>
+              <th>Real (BRL)</th>
+              <th>Moeda Local ({{cotacao_sigla}})</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for refeicao, moedas in resultado_alimentacao.iteritems %}
+              <tr>
+                <td>{{ refeicao }}</td>
+                <td>{{ moedas.0|floatformat:"2" }}</td>
+                <td>{{ moedas.1|floatformat:"2" }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% endif %}
+      {% if resultado_transporte %}
+        <table>
+          <thead>
+            <tr>
+              <th colspan="3">...para Transporte</th>
+            </tr>
+            <tr>
+              <th>Transporte</th>
+              <th>Real (BRL)</th>
+              <th>Moeda Local ({{cotacao_sigla}})</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for transporte, moedas in resultado_transporte.iteritems %}
+              <tr>
+                <td>{{ transporte }}</td>
+                <td>{{ moedas.0|floatformat:"2" }}</td>
+                <td>{{ moedas.1|floatformat:"2" }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% endif %}
+       {% if resultado_hospedagem %}
+        <table>
+          <thead>
+            <tr>
+              <th colspan="3">...para Hospedagem</th>
+            </tr>
+            <tr>
+              <th>Hospedagem</th>
+              <th>Real (BRL)</th>
+              <th>Moeda Local ({{cotacao_sigla}})</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for hospedagem, moedas in resultado_hospedagem.iteritems %}
+              <tr>
+                <td>{{ hospedagem }}</td>
+                <td>{{ moedas.0|floatformat:"2" }}</td>
+                <td>{{ moedas.1|floatformat:"2" }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% endif %}
       <a href="{% url 'cidade' cidade.slug %}" class="link">Voltar</a>
     </div>
   </div>

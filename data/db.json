@@ -32,6 +32,38 @@
     }
   },
   {
+    "model": "core.TipoDespesa",
+    "pk": 3,
+    "fields": {
+      "categoria": "T",
+      "nome": "Táxi"
+    }
+  },
+  {
+    "model": "core.TipoDespesa",
+    "pk": 4,
+    "fields": {
+      "categoria": "T",
+      "nome": "Metrô"
+    }
+  },
+  {
+    "model": "core.TipoDespesa",
+    "pk": 5,
+    "fields": {
+      "categoria": "H",
+      "nome": "Albergue"
+    }
+  },
+  {
+    "model": "core.TipoDespesa",
+    "pk": 6,
+    "fields": {
+      "categoria": "H",
+      "nome": "Hotel"
+    }
+  },
+  {
     "model": "core.Pais",
     "pk": 1,
     "fields": {
@@ -57,7 +89,7 @@
       "cidade": 1,
       "tipo_despesa": 1,
       "nivel": "E",
-      "valor": 100 
+      "valor": 1 
     }
   },
   {
@@ -67,7 +99,83 @@
       "cidade": 1,
       "tipo_despesa": 2,
       "nivel": "E",
-      "valor": 50 
+      "valor": 1 
+    }
+  },
+  {
+    "model": "core.Despesa",
+    "pk": 3,
+    "fields": {
+      "cidade": 1,
+      "tipo_despesa": 1,
+      "nivel": "M",
+      "valor": 2 
+    }
+  },
+  {
+    "model": "core.Despesa",
+    "pk": 4,
+    "fields": {
+      "cidade": 1,
+      "tipo_despesa": 2,
+      "nivel": "M",
+      "valor": 2 
+    }
+  },
+  {
+    "model": "core.Despesa",
+    "pk": 5,
+    "fields": {
+      "cidade": 1,
+      "tipo_despesa": 1,
+      "nivel": "C",
+      "valor": 3 
+    }
+  },
+  {
+    "model": "core.Despesa",
+    "pk": 6,
+    "fields": {
+      "cidade": 1,
+      "tipo_despesa": 2,
+      "nivel": "C",
+      "valor": 3 
+    }
+  },
+  {
+    "model": "core.Despesa",
+    "pk": 7,
+    "fields": {
+      "cidade": 1,
+      "tipo_despesa": 3,
+      "valor": 1 
+    }
+  },
+  {
+    "model": "core.Despesa",
+    "pk": 8,
+    "fields": {
+      "cidade": 1,
+      "tipo_despesa": 4,
+      "valor": 1 
+    }
+  },
+  {
+    "model": "core.Despesa",
+    "pk": 9,
+    "fields": {
+      "cidade": 1,
+      "tipo_despesa": 5,
+      "valor": 1 
+    }
+  },
+  {
+    "model": "core.Despesa",
+    "pk": 10,
+    "fields": {
+      "cidade": 1,
+      "tipo_despesa": 6,
+      "valor": 1 
     }
   }
 ]
