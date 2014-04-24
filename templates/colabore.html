@@ -26,6 +26,38 @@
           <input type="text" id="moeda" name="moeda" />
         </div>
       </div>
+
+      <div class="form-set">
+        <table class="colabore-despesas">
+          <thead>
+            <tr>
+              <th></th>
+              {% for nivel in niveis %}
+                <th>{{ nivel }}</th>
+              {% endfor %}
+            </tr>
+          </thead>
+          <tbody>
+            {% regroup despesas|dictsort:"categoria.nome" by categoria as categorias_despesas %}
+            {% for despesa in categorias_despesas %}
+              <tr><td colspan="{{ niveis.count|add:'1' }}" class="grouper-row">{{ despesa.grouper }}</td></tr>
+              {% for item in despesa.list %}
+                <tr>
+                  <td><label>{{ item.nome }}</label></td>
+                  {% for nivel in niveis %}
+                    <td><input type="text" id="{{ nivel.id }}-{{ item.id }}" name="{{ nivel.id }}-{{ item.id }}"></td>
+                  {% endfor %}
+                </tr>
+              {% endfor %}
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+
+
+
+      {% comment %}
       {% for nivel in niveis %}
         <div class="form-set">
           <h3>{{ nivel }}</h3>
@@ -37,6 +69,7 @@
           {% endfor %}
         </div>
       {% endfor %}
+      {% endcomment %}
       <div class="form-set">
         <h3>Informações Adicionais</h3>
         <div class="form-row">

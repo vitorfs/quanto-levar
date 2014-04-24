@@ -333,12 +333,18 @@ footer {
   margin-bottom: 8px;
 }
 
-.form-row input, .form-row textarea {
+.form-row input, 
+.form-row textarea, 
+.form-set input,
+.form-set textarea {
   font-size: 1.4em;
   width: 100%;
 }
 
-.form-row input[type="text"]:focus, .form-row textarea:focus {
+.form-row input[type="text"]:focus, 
+.form-row textarea:focus,
+.form-set input[type="text"]:focus, 
+.form-set textarea:focus {
   border-color: rgba(0, 177, 207, 0.8);
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(0, 177, 207, 0.6);
 }
@@ -350,4 +356,21 @@ footer {
 
 .form-set h3 {
   margin-bottom: 20px;
+}
+
+.colabore-despesas thead tr th {
+  text-align: center;
+}
+
+.colabore-despesas tbody tr td:first-child {
+  text-align: right;
+}
+
+.colabore-despesas tbody tr td input {
+  font-size: 1em;
+}
+
+.colabore-despesas tbody tr td.grouper-row {
+  font-weight: 600;
+  text-align: center;
 }
