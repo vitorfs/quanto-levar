@@ -8,28 +8,29 @@
   <div class="container">
     <div id="resultado-calculo">
       <h3>O cálculo para {{ dias }} dia(s) em {{ cidade.nome }} com nível {{ nivel.nome }} é</h3>
+      {% for categoria, siglas in valores.iteritems %}
       <table>
         <thead>
           <tr>
-            <th>Categoria</th>
+            <th colspan="3">{{ categoria }}</th>
+          </tr>
+          <tr>
             <th>Moeda</th>
             <th>Valor</th>
             <th>Valor/Dia</th>
-            <th>Total</th>
           </tr>
         </thead>
         <tbody>
-        {% for chave, valor in valores.iteritems %}
+        {% for sigla, valor in siglas.iteritems %}
           <tr>
-            <td>{{ chave.0 }}</td>
-            <td>{{ chave.1 }}</td>
+            <td>{{ sigla }}</td>
             <td>{{ valor|multiplicar:dias|floatformat:"2" }}</td>
             <td>{{ valor|floatformat:"2" }}</td>
-            <td>{{ valores|somar_despesas:chave.1|floatformat:"2" }}</td>
           </tr>
         {% endfor %}
         </tbody>
       </table>
+      {% endfor %}
       <a href="{% url 'cidade' cidade.slug %}" class="link">Voltar</a>
     </div>
   </div>

@@ -72,14 +72,16 @@ def calculo(request, slug):
         sigla = info.cidade.pais.cotacao.sigla
         cotacao = info.cidade.pais.cotacao.valor
         categoria = info.despesa.categoria.nome
-        if sigla in lista_valores:
-            lista_valores[categoria, sigla] += info.valor
+        if categoria not in lista_valores:
+            lista_valores[categoria] = {}
+        if sigla in lista_valores[categoria]:
+            lista_valores[categoria][sigla] += info.valor
             if sigla != 'BRL':
-                lista_valores[categoria, 'BRL'] += info.valor * cotacao
+                lista_valores[categoria]['BRL'] += info.valor * cotacao
         else:
-            lista_valores[categoria, sigla] = info.valor
+            lista_valores[categoria][sigla] = info.valor
             if sigla != 'BRL':
-                lista_valores[categoria, 'BRL'] = info.valor * cotacao
+                lista_valores[categoria]['BRL'] = info.valor * cotacao
     nivel = Nivel.objects.get(pk=nivel)
     return render(request, 'calculo.html', {'valores': lista_valores, 'dias': dias, 'cidade': cidade, 'nivel': nivel})
 
