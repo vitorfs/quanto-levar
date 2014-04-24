@@ -12,24 +12,28 @@
         <input type="text" id="dias" name="dias">
         <div class="erro-dias">Informe o número de dias antes de prosseguir</div>
       </div>
-      <ul class="niveis">
-        {% for nivel in niveis %}
-          <li><input type="radio" name="nivel" value="{{ nivel.id }}" {% if forloop.counter == 1 %} checked="checked" {% endif %} > {{ nivel.nome }}</li>
-        {% endfor %}
-      </ul>
       <div class="container-despesas">
         {% for nivel, despesas in niveis_despesas.iteritems %}
           {% regroup despesas by despesa.categoria as categorias_despesas %}
-          <div nivel="{{ nivel }}" {% if forloop.counter > 1 %} class="hide"{% endif %}>
             {% for despesa in categorias_despesas %}
               <h4>{{ despesa.grouper }}</h4>
               <ul class="despesas">
+                {% if despesa.grouper.nome == "Alimentação" %}
+                  <ul class="niveis">
+		            <li><input type="radio" name="nivel" value="1" checked="checked"> Econômico</li>
+		            <li><input type="radio" name="nivel" value="2" > Moderado</li>
+		            <li><input type="radio" name="nivel" value="3" > Caro</li>
+		          </ul>
+		        {% endif %}
                 {% for item in despesa.list %}
-                  <li><input name="despesas-selecionadas" type="checkbox" value="{{ item.despesa.id}}" checked="checked" {% if forloop.parentloop.parentloop.counter > 1 %} disabled="disabled" {% endif %}/>{{ item.despesa.nome }}</li>
+                  {% if despesa.grouper.nome == "Hospedagem" %}
+                    <li><input name="despesas-selecionadas" type="radio" value="{{ item.despesa.id}}" {% if forloop.counter == 1 %} checked="checked" {% endif %}/>{{ item.despesa.nome }}</li>
+                  {% else %}
+                    <li><input name="despesas-selecionadas" type="checkbox" value="{{ item.despesa.id}}" checked="checked" {% if forloop.parentloop.parentloop.counter > 1 %} disabled="disabled" {% endif %}/>{{ item.despesa.nome }}</li>
+                  {% endif %}
                 {% endfor %}
               </ul>
             {% endfor %}
-          </div>
         {% endfor %}
       </div>
       <button type="submit" id="calcular" class="btn">Calcular</button>

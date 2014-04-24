@@ -18,7 +18,7 @@ def home(request):
 
 def cidade(request, slug):
     cidade = Cidade.objects.get(slug=slug)
-    cidade_despesas = CidadeDespesa.objects.filter(cidade=cidade)
+    cidade_despesas = CidadeDespesa.objects.filter(cidade=cidade, nivel=1)
     niveis = Nivel.objects.filter(id__in=cidade_despesas.values("nivel").distinct())
     niveis_despesas = {}
     for nivel in niveis:
@@ -72,6 +72,8 @@ def calculo(request, slug):
         sigla = info.cidade.pais.cotacao.sigla
         cotacao = info.cidade.pais.cotacao.valor
         categoria = info.despesa.categoria.nome
+        if categoria == "Hospedagem":
+            tipo_hospedagem = Despesa.objects.get(id=despesa)
         if categoria not in lista_valores:
             lista_valores[categoria] = {}
         if sigla in lista_valores[categoria]:
@@ -83,7 +85,7 @@ def calculo(request, slug):
             if sigla != 'BRL':
                 lista_valores[categoria]['BRL'] = info.valor * cotacao
     nivel = Nivel.objects.get(pk=nivel)
-    return render(request, 'calculo.html', {'valores': lista_valores, 'dias': dias, 'cidade': cidade, 'nivel': nivel})
+    return render(request, 'calculo.html', {'valores': lista_valores, 'dias': dias, 'cidade': cidade, 'nivel': nivel, 'tipo_hospedagem': tipo_hospedagem})
 
 def carregar_cotacoes(request):
     Cotacao.atualizar_cotacao_banco_central()

@@ -12,7 +12,7 @@
       <table>
         <thead>
           <tr>
-            <th colspan="3">...para {{ categoria }}</th>
+            <th colspan="3">...para {{ categoria }} {% if categoria == "Hospedagem" %} ({{ tipo_hospedagem.nome }}) {% endif %}</th>
           </tr>
           <tr>
             <th>Moeda</th>
