@@ -30,8 +30,6 @@ class CidadeAdmin(admin.ModelAdmin):
     search_fields = ['nome', 'estado', 'pais__nome']
     inlines = [CidadeDespesaInline]
 
-admin.site.register(Nivel)
-admin.site.register(Categoria)
 admin.site.register(Cotacao, CotacaoAdmin)
 admin.site.register(Despesa, DespesaAdmin)
 admin.site.register(Pais, PaisAdmin)

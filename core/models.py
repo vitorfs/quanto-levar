@@ -4,27 +4,6 @@ from django.db import models
 import urllib2
 from datetime import datetime, timedelta
 
-class Nivel(models.Model):
-    nome = models.CharField('Nome', max_length=255)
-
-    class Meta:
-        verbose_name = 'Nivel'
-        verbose_name_plural = 'Níveis'
-    
-    def __unicode__(self):
-        return self.nome
-
-
-class Categoria(models.Model):
-    nome = models.CharField('Nome', max_length=255)
-    
-    class Meta:
-        verbose_name = 'Categoria'
-        verbose_name_plural = 'Categorias'
-    
-    def __unicode__(self):
-        return self.nome
-
 
 class Cotacao(models.Model):
     sigla = models.CharField(max_length=3, unique=True)
@@ -70,7 +49,17 @@ class Cotacao(models.Model):
 
 
 class Despesa(models.Model):
-    categoria = models.ForeignKey(Categoria)
+    ALIMENTACAO = 'A'
+    TRANSPORTE = 'T'
+    HOSPEDAGEM = 'H'
+
+    CATEGORIAS = (
+        (ALIMENTACAO, 'Alimentação'),
+        (TRANSPORTE, 'Transporte'),
+        (HOSPEDAGEM, 'Hospedagem'),
+        )
+
+    categoria = models.CharField(max_length=1, choices=CATEGORIAS)
     nome = models.CharField('Nome', max_length=255)
     
     class Meta:
@@ -110,20 +99,32 @@ class Cidade(models.Model):
     def __unicode__(self):
         return self.nome
 
+    def listar_despesas(self):
+        return CidadeDespesa.objects.filter(cidade=self)
+
 
 class CidadeDespesa(models.Model):
+    ECONOMICO = 'E'
+    MODERADO = 'M'
+    CARO = 'C'
+
+    NIVEIS = (
+        (ECONOMICO, 'Econômico'),
+        (MODERADO, 'Moderado'),
+        (CARO, 'Caro'),
+        )
+
     cidade = models.ForeignKey(Cidade)
     despesa = models.ForeignKey(Despesa)
-    nivel = models.ForeignKey(Nivel)
+    nivel = models.CharField(max_length=1, choices=NIVEIS)
     valor = models.FloatField('Valor')
     
     class Meta:
         verbose_name = 'Despesa de Cidade'
         verbose_name_plural = 'Despesas de Cidades'
-        ordering = ('cidade__nome', 'nivel__nome', 'despesa__categoria__nome', 'despesa__nome')
     
     def __unicode__(self):
-        return u'{0} - {1}'.format(self.despesa.nome, self.nivel.nome)
+        return u'{0} - {1}'.format(self.despesa.nome, self.get_nivel_display())
 
     def pais(self):
         return self.cidade.pais

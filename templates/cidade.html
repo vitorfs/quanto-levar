@@ -12,26 +12,37 @@
         <input type="text" id="dias" name="dias">
         <div class="erro-dias">Informe o número de dias antes de prosseguir</div>
       </div>
-      <ul class="niveis">
-        {% for nivel in niveis %}
-          <li><input type="radio" name="nivel" value="{{ nivel.id }}" {% if forloop.counter == 1 %} checked="checked" {% endif %} > {{ nivel.nome }}</li>
-        {% endfor %}
-      </ul>
+
+      {% for despesa in cidade.listar_despesas %}
       <div class="container-despesas">
-        {% for nivel, despesas in niveis_despesas.iteritems %}
-          {% regroup despesas by despesa.categoria as categorias_despesas %}
-          <div nivel="{{ nivel }}" {% if forloop.counter > 1 %} class="hide"{% endif %}>
-            {% for despesa in categorias_despesas %}
-              <h4>{{ despesa.grouper }}</h4>
-              <ul class="despesas">
-                {% for item in despesa.list %}
-                  <li><input name="despesas-selecionadas" type="checkbox" value="{{ item.despesa.id}}" checked="checked" {% if forloop.parentloop.parentloop.counter > 1 %} disabled="disabled" {% endif %}/>{{ item.despesa.nome }}</li>
-                {% endfor %}
-              </ul>
-            {% endfor %}
-          </div>
-        {% endfor %}
+        <ul class="despesas">
+          <li><input name="despesas-selecionadas" type="checkbox" value="{{ despesa.despesa.id}}" checked="checked">{{ despesa.despesa.nome }}</li>
+        </ul>
       </div>
+      {% endfor %}
+
+      {% comment %}
+        <ul class="niveis">
+          {% for nivel in niveis %}
+            <li><input type="radio" name="nivel" value="{{ nivel.id }}" {% if forloop.counter == 1 %} checked="checked" {% endif %} > {{ nivel.nome }}</li>
+          {% endfor %}
+        </ul>
+        <div class="container-despesas">
+          {% for nivel, despesas in niveis_despesas.iteritems %}
+            {% regroup despesas by despesa.categoria as categorias_despesas %}
+            <div nivel="{{ nivel }}" {% if forloop.counter > 1 %} class="hide"{% endif %}>
+              {% for despesa in categorias_despesas %}
+                <h4>{{ despesa.grouper }}</h4>
+                <ul class="despesas">
+                  {% for item in despesa.list %}
+                    <li><input name="despesas-selecionadas" type="checkbox" value="{{ item.despesa.id}}" checked="checked" {% if forloop.parentloop.parentloop.counter > 1 %} disabled="disabled" {% endif %}/>{{ item.despesa.nome }}</li>
+                  {% endfor %}
+                </ul>
+              {% endfor %}
+            </div>
+          {% endfor %}
+        </div>
+      {% endcomment %}
       <button type="submit" id="calcular" class="btn">Calcular</button>
     </form>
   </div>

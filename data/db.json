@@ -1,19 +1,5 @@
 [
   {
-    "model": "core.Nivel",
-    "pk": 1,
-    "fields": {
-      "nome": "Econômico"
-    }
-  },
-  {
-    "model": "core.Categoria",
-    "pk": 1,
-    "fields": {
-      "nome": "Alimentação"
-    }
-  },
-  {
     "model": "core.Cotacao",
     "pk": 1,
     "fields": {
@@ -33,7 +19,7 @@
     "model": "core.Despesa",
     "pk": 1,
     "fields": {
-      "categoria": "1",
+      "categoria": "A",
       "nome": "Café da Manhã"
     }
   },
@@ -41,7 +27,7 @@
     "model": "core.Despesa",
     "pk": 2,
     "fields": {
-      "categoria": "1",
+      "categoria": "A",
       "nome": "Almoço"
     }
   },
@@ -70,7 +56,7 @@
     "fields": {
       "cidade": 1,
       "despesa": 1,
-      "nivel": 1,
+      "nivel": "E",
       "valor": 100 
     }
   },
@@ -80,7 +66,7 @@
     "fields": {
       "cidade": 1,
       "despesa": 2,
-      "nivel": 1,
+      "nivel": "E",
       "valor": 50 
     }
   }
