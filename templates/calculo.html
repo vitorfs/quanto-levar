@@ -15,6 +15,7 @@
             <th>Moeda</th>
             <th>Valor</th>
             <th>Valor/Dia</th>
+            <th>Total</th>
           </tr>
         </thead>
         <tbody>
@@ -24,6 +25,7 @@
             <td>{{ chave.1 }}</td>
             <td>{{ valor|multiplicar:dias|floatformat:"2" }}</td>
             <td>{{ valor|floatformat:"2" }}</td>
+            <td>{{ valores|somar_despesas:chave.1|floatformat:"2" }}</td>
           </tr>
         {% endfor %}
         </tbody>
