@@ -32,7 +32,11 @@
           <tbody>
             {% regroup despesas|dictsort:"categoria" by categoria as categorias_despesas %}
             {% for despesa in categorias_despesas %}
-              <tr><td colspan="{{ niveis.count|add:'1' }}" class="grouper-row">{{ despesa.grouper }}</td></tr>
+              <tr><td colspan="{{ niveis.count|add:'1' }}" class="grouper-row">
+                {%if despesa.grouper == 'A' %} Alimentação {% endif %}
+                {%if despesa.grouper == 'T' %} Transporte {% endif %}
+                {%if despesa.grouper == 'H' %} Hospedagem {% endif %}
+              </td></tr>
               {% for item in despesa.list %}
                 <tr>
                   <td><label>{{ item.nome }}</label></td>
@@ -50,7 +54,7 @@
           <textarea id="info-adicionais" name="info-adicionais" rows="10"></textarea>
         </div>
       </div>
-      <div class="form-row">
+      <div align="center">
         <script type="text/javascript" src="http://api.recaptcha.net/challenge?k=6Lew2fESAAAAADIyxvzm_dS4WhePbJxXLcAyu9d-"></script>
         <noscript>
           <iframe 
@@ -65,6 +69,8 @@
         </noscript>
       </div>
       <button type="submit" id="enviar" class="btn">Enviar</button>
+      <br />
+      <a href="{% url 'home' %}" class="link">Voltar</a>
     </form>
   </div>
 {% endblock conteudo %}
