@@ -46,12 +46,24 @@ $(function () {
     }
   });
 
-  $(".niveis li input").click(function () {
-    $(".container-despesas div").hide();
-    $(".container-despesas div input[type='checkbox']").prop("checked", false);
-    $(".container-despesas div input[type='checkbox']").prop("disabled", true);
-    $(".container-despesas div[nivel='" + $(this).val() + "'] input[type='checkbox']").prop("checked", true);
-    $(".container-despesas div[nivel='" + $(this).val() + "'] input[type='checkbox']").prop("disabled", false);
-    $(".container-despesas div[nivel='" + $(this).val() + "']").fadeIn();
+  $("#colabore-enviar").click(function () {
+    $.ajax({
+      url: '/validar_captcha/',
+      data: {
+        'recaptcha_challenge_field': $('input[name="recaptcha_challenge_field"]').val(),
+        'recaptcha_response_field': $('input[name="recaptcha_response_field"]').val(),
+        'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val()
+      },
+      cache: false,
+      type: 'post',
+      success: function (data) {
+        if (data == 'True') {
+          $("#form-colabore").submit();
+        }
+        else {
+          $("p.erro").fadeIn();
+        }
+      }
+    });
   });
 });

@@ -5,7 +5,7 @@
 {% block conteudo %}
   <h2>Colabore</h2>
   <div class="container">
-    <form action="{% url 'enviar' %}" method="post">
+    <form action="." method="post" id="form-colabore">
       {% csrf_token %}
       <div class="form-set">
         <h3>Localidade</h3>
@@ -26,26 +26,48 @@
           <input type="text" id="moeda" name="moeda" />
         </div>
       </div>
-
+      <p>Informe os valores aproximados para as despesas abaixo utilizando a moeda local.</p>
+      <p>Se for uma cidade dos Estados Unidos, informe em dólares americano (USD). Se for na Argentina, informe em pesos argentinos (ARL), etc.</p>
       <div class="form-set">
-        <table class="colabore-despesas">
-          <tbody>
-            {% regroup despesas|dictsort:"categoria" by categoria as categorias_despesas %}
-            {% for despesa in categorias_despesas %}
-              <tr><td colspan="{{ niveis.count|add:'1' }}" class="grouper-row">
-                {%if despesa.grouper == 'A' %} Alimentação {% endif %}
-                {%if despesa.grouper == 'T' %} Transporte {% endif %}
-                {%if despesa.grouper == 'H' %} Hospedagem {% endif %}
-              </td></tr>
-              {% for item in despesa.list %}
+        {% regroup despesas|dictsort:"categoria" by categoria as categorias_despesas %}
+        {% for despesa in categorias_despesas %}
+          <table class="colabore-despesas">
+            <thead>
+              {% if despesa.grouper == 'A' %}
                 <tr>
-                  <td><label>{{ item.nome }}</label></td>
-                  <td><input type="text" id="{{ item.id }}" name="{{ item.id }}"></td>
+                  <th colspan="4" class="grouper-row">Alimentação</th>
                 </tr>
-              {% endfor %}
+                <tr>
+                  <th></th>
+                  <th>Econômico</th>
+                  <th>Moderado</th>
+                  <th>Caro</th>
+                </tr>
+              {% else %}
+                <tr>
+                  <th colspan="2" class="grouper-row">
+                    {%if despesa.grouper == 'T' %} Transporte {% endif %}
+                    {%if despesa.grouper == 'H' %} Hospedagem {% endif %}
+                  </th>
+                </tr>
+              {% endif %}
+            </thead>
+            <tbody>
+            {% for item in despesa.list %}
+              <tr>
+                <td><label>{{ item.nome }}</label></td>
+                {% if despesa.grouper == 'A' %}
+                  <td><input type="text" name="{{ item.nome }}-economico"></td>
+                  <td><input type="text" name="{{ item.nome }}-moderado"></td>
+                  <td><input type="text" name="{{ item.nome }}-caro"></td>
+                {% else %}
+                  <td><input type="text" name="{{ item.nome }}"></td>
+                {% endif %}
+              </tr>
             {% endfor %}
-          </tbody>
-        </table>
+            </tbody>
+          </table>
+        {% endfor %}
       </div>
 
       <div class="form-set">
@@ -67,10 +89,14 @@
           <textarea name="recaptcha_challenge_field" rows="3" cols="40"></textarea>
           <input type="hidden" name="recaptcha_response_field" value="manual_challenge">
         </noscript>
+        <p class="erro">
+          Captcha inválido! Por favor tente novamente.
+        </p>
       </div>
-      <button type="submit" id="enviar" class="btn">Enviar</button>
-      <br />
-      <a href="{% url 'home' %}" class="link">Voltar</a>
+      <div style="margin-top: 2em">
+        <button type="button" id="colabore-enviar" class="btn" style="margin-right: 1em">Enviar</button>
+        <a href="{% url 'home' %}" class="link">Voltar</a>
+      </div>
     </form>
   </div>
 {% endblock conteudo %}

@@ -31,29 +31,30 @@ def buscar(request):
         return HttpResponse(url)
     except Exception, e:
         return HttpResponseBadRequest(u'Não encontramos nenhum registro para a cidade {0} :('.format(nome_cidade))
-    
-def colabore(request):
-    despesas = TipoDespesa.objects.all()
-    return render(request, 'colabore.html', {'despesas': despesas})
 
+@ajax_required
 @require_POST
-def enviar(request):
-    cidade = request.POST['cidade']
-    estado = request.POST['estado']
-    print cidade
-    print estado
-    
-    if request.method == 'POST':
-        response = captcha.submit(
-        request.POST['recaptcha_challenge_field'],
-        request.POST['recaptcha_response_field'],
-        "6Lew2fESAAAAAKz04iu27K1TTXTDw-j5LlXqkiwE",
-        request.META.get('REMOTE_ADDR'))
-    if not response.is_valid:
-        print "INVALID!"
+def validar_captcha(request):
+    captcha_response = captcha.submit(
+    request.POST['recaptcha_challenge_field'],
+    request.POST['recaptcha_response_field'],
+    "6Lew2fESAAAAAKz04iu27K1TTXTDw-j5LlXqkiwE",
+    request.META.get('REMOTE_ADDR'))    
+    if captcha_response.is_valid:
+        return HttpResponse('True')
     else:
-        print "VALID!"
-    return render(request, 'colabore.html')
+        return HttpResponse('False')
+
+def colabore(request):
+    if request.method == 'POST':
+        descricao = u''
+        for key, value in request.POST.iteritems():
+            descricao += u'{0}: {1}\n'.format(key, value)
+        Colaboracao(descricao=descricao).save()
+        return render(request, 'sucesso.html')
+    else:
+        despesas = TipoDespesa.objects.all()
+        return render(request, 'colabore.html', {'despesas': despesas})
 
 @require_POST
 def calculo(request, slug):
@@ -104,44 +105,7 @@ def calculo(request, slug):
     if nivel == Despesa.CARO:
         print "metrica para transporte em caro"
 
-    print resultado_alimentacao
-    print resultado_transporte
-    print resultado_hospedagem
-    print resultado_total
     return render(request, 'calculo.html', {'resultado_alimentacao': resultado_alimentacao, 'resultado_transporte': resultado_transporte, 'resultado_hospedagem': resultado_hospedagem, 'resultado_total': resultado_total, 'cotacao_sigla': cotacao.sigla, 'dias': dias, 'cidade': cidade})
-
-#    dias = request.POST.get('dias')
-#    nivel = request.POST.get('nivel')
-#    despesas_selecionadas = request.POST.getlist('despesas-selecionadas')
-#    cidade = Cidade.objects.get(slug=slug)
-#    lista_valores = {}
-#    transportes = {}
-#    for despesa in despesas_selecionadas:
-#        info = Despesa.objects.get(cidade=cidade, tipo_despesa=despesa, nivel=nivel)
-#        sigla = info.cidade.pais.cotacao.sigla
-#        cotacao = info.cidade.pais.cotacao.valor
-#        categoria = info.despesa.categoria.nome
-#        if categoria == "Hospedagem":
-#            tipo_hospedagem = TipoDespesa.objects.get(id=despesa)
-#        if categoria != "Transporte":
-#            if categoria not in lista_valores:
-#                lista_valores[categoria] = {}
-#            if sigla in lista_valores[categoria]:
-#                lista_valores[categoria][sigla] += info.valor
-#                if sigla != 'BRL':
-#                    lista_valores[categoria]['BRL'] += info.valor * cotacao
-#            else:
-#                lista_valores[categoria][sigla] = info.valor
-#                if sigla != 'BRL':
-#                    lista_valores[categoria]['BRL'] = info.valor * cotacao
-#        else:
-#            tipo_transporte = TipoDespesa.objects.get(id=despesa)
-#            if tipo_transporte.nome not in transportes:
-#                transportes[tipo_transporte.nome] = {}
-#            transportes[tipo_transporte.nome][sigla] = info.valor
-#            transportes[tipo_transporte.nome]['BRL'] = info.valor * cotacao
-#    nivel = Nivel.objects.get(pk=nivel)
-#    return render(request, 'calculo.html', {'resultado_alimentacao': lista_valores, 'dias': dias, 'cidade': cidade, 'nivel': nivel, 'transportes': transportes, 'tipo_hospedagem': tipo_hospedagem})
 
 def carregar_cotacoes(request):
     Cotacao.atualizar_cotacao_banco_central()

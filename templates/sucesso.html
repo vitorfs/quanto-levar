@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Colabore com Quanto Levar{% endblock %}
+
+{% block conteudo %}
+  <h2>Colabore</h2>
+  <div class="container">
+    <h3 style="margin: 3em 0">Formulário enviado com sucesso!</h3>
+    <a href="{% url 'home' %}" class="link">Voltar</a>
+  </div>
+{% endblock conteudo %}

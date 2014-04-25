@@ -151,4 +151,12 @@ class Despesa(models.Model):
         return self.tipo_despesa.nome
 
     def pais(self):
-        return self.cidade.pais
+        return self.cidade.pai
+
+
+class Colaboracao(models.Model):
+    descricao = models.TextField(max_length=4000)
+    
+    class Meta:
+        verbose_name = 'Colaboração'
+        verbose_name_plural = 'Colaborações'
