@@ -28,7 +28,7 @@ header {
   border-top: 20px solid #92C35E;
 }
 
-p {
+p.help {
   font-size: 1.4em;
   text-align: left;
   margin: 0.8em 0;

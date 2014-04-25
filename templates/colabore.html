@@ -26,8 +26,8 @@
           <input type="text" id="moeda" name="moeda" />
         </div>
       </div>
-      <p>Informe os valores aproximados para as despesas abaixo utilizando a moeda local.</p>
-      <p>Se for uma cidade dos Estados Unidos, informe em dólares americano (USD). Se for na Argentina, informe em pesos argentinos (ARL), etc.</p>
+      <p class="help">Informe os valores aproximados para as despesas abaixo utilizando a moeda local.</p>
+      <p class="help">Se for uma cidade dos Estados Unidos, informe em dólares americano (USD). Se for na Argentina, informe em pesos argentinos (ARL), etc.</p>
       <div class="form-set">
         {% regroup despesas|dictsort:"categoria" by categoria as categorias_despesas %}
         {% for despesa in categorias_despesas %}
@@ -89,7 +89,7 @@
           <textarea name="recaptcha_challenge_field" rows="3" cols="40"></textarea>
           <input type="hidden" name="recaptcha_response_field" value="manual_challenge">
         </noscript>
-        <p class="erro">
+        <p class="help erro">
           Captcha inválido! Por favor tente novamente.
         </p>
       </div>
