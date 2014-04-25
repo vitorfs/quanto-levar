@@ -2,6 +2,7 @@
 
 from django.db import models
 import urllib2
+import operator
 from datetime import datetime, timedelta
 
 class Cotacao(models.Model):
@@ -99,6 +100,7 @@ class Cidade(models.Model):
         niveis = {}
         for despesa in despesas:
             niveis[despesa.nivel] = despesa.get_nivel_display()
+        niveis = sorted(niveis.iteritems(), key=operator.itemgetter(1))
         return niveis
 
 
@@ -131,9 +133,9 @@ class Despesa(models.Model):
     CARO = 'C'
 
     NIVEIS = (
-        (ECONOMICO, u'Econômico'),
-        (MODERADO, u'Moderado'),
-        (CARO, u'Caro'),
+        (ECONOMICO, u'1Econômico'),
+        (MODERADO, u'2Moderado'),
+        (CARO, u'3Caro'),
         )
 
     cidade = models.ForeignKey(Cidade)

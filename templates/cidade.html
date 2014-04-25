@@ -17,8 +17,8 @@
         {% if cidade.listar_alimentacao %}
           <h4>Alimentação</h4>
           <ul class="niveis">
-            {% for codigo, descricao in cidade.listar_niveis_alimentacao.iteritems %}
-              <li><input type="radio" name="nivel" value="{{ codigo }}" {% if forloop.counter == 1 %} checked="checked" {% endif %}> {{ descricao }}</li>
+            {% for codigo, descricao in cidade.listar_niveis_alimentacao %}
+              <li><input type="radio" name="nivel" value="{{ codigo }}" {% if forloop.counter == 1 %} checked="checked" {% endif %}> {{ descricao|slice:"1:" }}</li>
             {% endfor %}
           </ul>
           <ul class="despesas">
