@@ -53,7 +53,8 @@ def colabore(request):
         Colaboracao(descricao=descricao).save()
         return render(request, 'sucesso.html')
     else:
-        despesas = TipoDespesa.objects.all()
+        despesas = TipoDespesa.objects.all().order_by("id")
+        print despesas
         return render(request, 'colabore.html', {'despesas': despesas})
 
 @require_POST
@@ -78,7 +79,7 @@ def calculo(request, slug):
     for despesa in despesas:
         categoria = despesa.tipo_despesa.categoria
         if categoria == TipoDespesa.ALIMENTACAO:
-            resultado_alimentacao[despesa.tipo_despesa.nome] = [despesa.valor * cotacao.valor, despesa.valor]
+            resultado_alimentacao[str(despesa.tipo_despesa.id) + despesa.tipo_despesa.nome] = [despesa.valor * cotacao.valor, despesa.valor]
         if categoria == TipoDespesa.TRANSPORTE:               
             resultado_transporte[despesa.tipo_despesa.nome] = [despesa.valor * cotacao.valor, despesa.valor]
         if categoria == TipoDespesa.HOSPEDAGEM:
@@ -105,6 +106,7 @@ def calculo(request, slug):
     if nivel == Despesa.CARO:
         print "metrica para transporte em caro"
 
+    resultado_alimentacao = sorted(resultado_alimentacao.items())
     return render(request, 'calculo.html', {'resultado_alimentacao': resultado_alimentacao, 'resultado_transporte': resultado_transporte, 'resultado_hospedagem': resultado_hospedagem, 'resultado_total': resultado_total, 'cotacao_sigla': cotacao.sigla, 'dias': dias, 'cidade': cidade})
 
 def carregar_cotacoes(request):

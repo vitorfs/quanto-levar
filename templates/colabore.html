@@ -35,7 +35,7 @@
             <thead>
               {% if despesa.grouper == 'A' %}
                 <tr>
-                  <th colspan="4" class="grouper-row">Alimentação</th>
+                  <th colspan="4" class="grouper-row">Alimentação (por dia)</th>
                 </tr>
                 <tr>
                   <th></th>
@@ -46,8 +46,8 @@
               {% else %}
                 <tr>
                   <th colspan="2" class="grouper-row">
-                    {%if despesa.grouper == 'T' %} Transporte {% endif %}
-                    {%if despesa.grouper == 'H' %} Hospedagem {% endif %}
+                    {%if despesa.grouper == 'T' %} Transporte (por trajeto de 10km ou passagem) {% endif %}
+                    {%if despesa.grouper == 'H' %} Hospedagem (diária) {% endif %}
                   </th>
                 </tr>
               {% endif %}

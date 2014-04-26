@@ -44,9 +44,9 @@
             </tr>
           </thead>
           <tbody>
-            {% for refeicao, moedas in resultado_alimentacao.iteritems %}
+            {% for refeicao, moedas in resultado_alimentacao %}
               <tr>
-                <td>{{ refeicao }}</td>
+                <td>{{ refeicao|slice:"1:" }}</td>
                 <td>{{ moedas.0|floatformat:"2" }}</td>
                 <td>{{ moedas.1|floatformat:"2" }}</td>
               </tr>
@@ -58,7 +58,7 @@
         <table>
           <thead>
             <tr>
-              <th colspan="3">...para Transporte (por trajeto médio ou passagem)</th>
+              <th colspan="3">...para Transporte (por trajeto de 10km ou passagem)</th>
             </tr>
             <tr>
               <th>Transporte</th>
