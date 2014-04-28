@@ -67,7 +67,13 @@ def calculo(request, slug):
     transporte = request.POST.getlist('transporte')
     hospedagem = request.POST.get('hospedagem')
 
-    tipos_despesas = alimentacao + transporte + list(hospedagem)
+    tipos_despesas = []
+    if alimentacao:
+        tipos_despesas += alimentacao
+    if transporte:
+        tipos_despesas += transporte
+    if hospedagem:
+        tipos_despesas += list(hospedagem)
     despesas = Despesa.objects.filter(tipo_despesa__id__in=tipos_despesas).filter(Q(nivel=nivel, cidade=cidade) | Q(nivel=None))
     
     cotacao = cidade.pais.cotacao
