@@ -84,21 +84,22 @@ def calculo(request, slug):
             resultado_transporte[despesa.tipo_despesa.nome] = [despesa.valor * cotacao.valor, despesa.valor]
         if categoria == TipoDespesa.HOSPEDAGEM:
             resultado_hospedagem[despesa.tipo_despesa.nome] = [despesa.valor * cotacao.valor, despesa.valor]
-    for despesa, moedas in resultado_alimentacao.iteritems():
-        if (u'BRL' and cotacao.sigla) in resultado_total:
-            resultado_total[u'BRL'] += moedas[0]
-            resultado_total[cotacao.sigla] += moedas[1] 
-        else:
-            resultado_total[u'BRL'] = moedas[0]
-            resultado_total[cotacao.sigla] = moedas[1]
-    for despesa, moedas in resultado_hospedagem.iteritems():
-        if (u'BRL' and cotacao.sigla) in resultado_total:
-            resultado_total[u'BRL'] += moedas[0]
-            resultado_total[cotacao.sigla] += moedas[1] 
-        else:
-            resultado_total[u'BRL'] = moedas[0]
-            resultado_total[cotacao.sigla] = moedas[1]
-            
+    if resultado_alimentacao:
+        for despesa, moedas in resultado_alimentacao.iteritems():
+            if (u'BRL' and cotacao.sigla) in resultado_total:
+                resultado_total[u'BRL'] += moedas[0]
+                resultado_total[cotacao.sigla] += moedas[1] 
+            else:
+                resultado_total[u'BRL'] = moedas[0]
+                resultado_total[cotacao.sigla] = moedas[1]
+    if resultado_hospedagem:
+        for despesa, moedas in resultado_hospedagem.iteritems():
+            if (u'BRL' and cotacao.sigla) in resultado_total:
+                resultado_total[u'BRL'] += moedas[0]
+                resultado_total[cotacao.sigla] += moedas[1] 
+            else:
+                resultado_total[u'BRL'] = moedas[0]
+                resultado_total[cotacao.sigla] = moedas[1]            
     if nivel == Despesa.ECONOMICO:
         print "metrica para transporte em economico"
     if nivel == Despesa.MODERADO:
