@@ -155,7 +155,7 @@ class Despesa(models.Model):
 
 
 class Colaboracao(models.Model):
-    cidade = models.CharField('Cidade', max_length=255)
+    #cidade = models.CharField('Cidade', max_length=255)
     descricao = models.TextField(max_length=4000)
     
     class Meta:
