@@ -48,13 +48,15 @@ def validar_captcha(request):
 def colabore(request):
     if request.method == 'POST':
         descricao = u''
+        cidade = u''
         for key, value in request.POST.iteritems():
+            if key == u'cidade':
+                cidade = value
             descricao += u'{0}: {1}\n'.format(key, value)
-        Colaboracao(descricao=descricao).save()
+        Colaboracao(cidade=cidade, descricao=descricao).save()
         return render(request, 'sucesso.html')
     else:
         despesas = TipoDespesa.objects.all().order_by("id")
-        print despesas
         return render(request, 'colabore.html', {'despesas': despesas})
 
 @require_POST
@@ -73,7 +75,7 @@ def calculo(request, slug):
     if transporte:
         tipos_despesas += transporte
     if hospedagem:
-        tipos_despesas += list(hospedagem)
+        tipos_despesas.append(hospedagem)
     despesas = Despesa.objects.filter(tipo_despesa__id__in=tipos_despesas).filter(Q(nivel=nivel, cidade=cidade) | Q(nivel=None))
     
     cotacao = cidade.pais.cotacao
