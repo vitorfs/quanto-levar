@@ -76,7 +76,7 @@ def calculo(request, slug):
         tipos_despesas += transporte
     if hospedagem:
         tipos_despesas.append(hospedagem)
-    despesas = Despesa.objects.filter(tipo_despesa__id__in=tipos_despesas).filter(Q(nivel=nivel, cidade=cidade) | Q(nivel=None))
+    despesas = Despesa.objects.filter(tipo_despesa__id__in=tipos_despesas, cidade=cidade).filter(Q(nivel=nivel) | Q(nivel=None))
     
     cotacao = cidade.pais.cotacao
     
