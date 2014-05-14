@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Sobre o Quanto Levar{% endblock %}
+
+{% block conteudo %}
+  <h2>Sobre</h2>
+  <div class="container">
+    <h4>
+      <p>O site <a href="#">quantolevar.com</a> foi desenvolvido com o objetivo principal de dar noção às pessoas de quanto levar em dinheiro a qualquer lugar do mundo.</p>
+      <br />
+      <p>As informações contidas no site quantolevar.com não são exatas, uma vez que o objetivo é oferecer valores aproximados.</p>
+      <br />
+      <p><a href="#">Quantolevar.com</a> conta com a colaboração das pessoas que já visitaram as cidades e todos podem colaborar com valores que estejam desatualizados, deixando assim, as informações mais úteis e precisas.<p>
+      <br />
+      <p>A colaboração de <a href="#">quantolevar.com</a> é realizada online através do próprio site. </p>
+    </h4>
+    <br />
+    <a href="{% url 'colabore' %}" class="btn-link-colabore">Colabore!</a>
+    <br /><br />
+    <a href="{% url 'home' %}" class="link">Voltar</a>
+  </div>
+{% endblock conteudo %}

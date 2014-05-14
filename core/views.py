@@ -58,6 +58,9 @@ def colabore(request):
     else:
         despesas = TipoDespesa.objects.all().order_by("id")
         return render(request, 'colabore.html', {'despesas': despesas})
+    
+def sobre(request):
+    return render(request, 'sobre.html')
 
 @require_POST
 def calculo(request, slug):
@@ -100,23 +103,21 @@ def calculo(request, slug):
             else:
                 resultado_total[u'BRL'] = moedas[0]
                 resultado_total[cotacao.sigla] = moedas[1]
-    if resultado_hospedagem:
-        for despesa, moedas in resultado_hospedagem.iteritems():
-            if (u'BRL' and cotacao.sigla) in resultado_total:
-                resultado_total[u'BRL'] += moedas[0]
-                resultado_total[cotacao.sigla] += moedas[1] 
-            else:
-                resultado_total[u'BRL'] = moedas[0]
-                resultado_total[cotacao.sigla] = moedas[1]            
     if nivel == Despesa.ECONOMICO:
-        print "metrica para transporte em economico"
+        nivel = "Econômico"
     if nivel == Despesa.MODERADO:
-        print "metrica para transporte em moderado"
+        nivel = "Moderado"
     if nivel == Despesa.CARO:
-        print "metrica para transporte em caro"
-
+        nivel = "Caro"
     resultado_alimentacao = sorted(resultado_alimentacao.items())
-    return render(request, 'calculo.html', {'resultado_alimentacao': resultado_alimentacao, 'resultado_transporte': resultado_transporte, 'resultado_hospedagem': resultado_hospedagem, 'resultado_total': resultado_total, 'cotacao_sigla': cotacao.sigla, 'dias': dias, 'cidade': cidade})
+    return render(request, 'calculo.html', {'resultado_alimentacao': resultado_alimentacao,
+                                            'resultado_transporte': resultado_transporte, 
+                                            'resultado_hospedagem': resultado_hospedagem, 
+                                            'resultado_total': resultado_total, 
+                                            'cotacao_sigla': cotacao.sigla, 
+                                            'dias': dias, 
+                                            'cidade': cidade, 
+                                            'nivel': nivel})
 
 def carregar_cotacoes(request):
     Cotacao.atualizar_cotacao_banco_central()

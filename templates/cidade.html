@@ -26,6 +26,10 @@
               <li><input name="alimentacao" type="checkbox" value="{{ tipo_despesa.id}}" checked="checked">{{ tipo_despesa.nome }}</li>
             {% endfor %}
           </ul>
+        {% else %}
+          <ul class="despesas">
+            <a href="{% url 'colabore' %}" class="btn-link-colabore">Colabore com Alimentação!</a>
+          </ul>
         {% endif %}
 
         {% if cidade.listar_transporte %}
@@ -35,6 +39,10 @@
               <li><input name="transporte" type="checkbox" value="{{ tipo_despesa.id}}" checked="checked">{{ tipo_despesa.nome }}</li>
             {% endfor %}
           </ul>
+        {% else %}
+          <ul class="despesas">
+            <a href="{% url 'colabore' %}" class="btn-link-colabore">Colabore com Transporte!</a>
+          </ul>
         {% endif %}
 
         {% if cidade.listar_hospedagem %}
@@ -43,6 +51,10 @@
             {% for tipo_despesa in cidade.listar_hospedagem %}
               <li><input name="hospedagem" type="radio" value="{{ tipo_despesa.id}}" {% if forloop.counter == 1 %} checked="checked" {% endif %}>{{ tipo_despesa.nome }}</li>
             {% endfor %}
+          </ul>
+        {% else %}
+          <ul class="despesas">
+            <a href="{% url 'colabore' %}" class="btn-link-colabore">Colabore com Hospedagem!</a>
           </ul>
         {% endif %}
 

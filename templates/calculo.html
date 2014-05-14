@@ -12,7 +12,7 @@
         <table>
           <thead>
             <tr>
-              <th colspan="3">...valor Total da Viagem</th>
+              <th colspan="3">...valor Total da Alimentação em nível {{ nivel }}</th>
             </tr>
             <tr>
               <th>Moeda</th>
@@ -35,7 +35,7 @@
         <table>
           <thead>
             <tr>
-              <th colspan="3">...para Alimentação (por dia)</th>
+              <th colspan="3">...para Alimentação (por dia) em nível {{ nivel }}</th>
             </tr>
             <tr>
               <th>Refeição</th>
@@ -52,7 +52,7 @@
               </tr>
             {% endfor %}
           </tbody>
-        </table>
+        </table>              
       {% endif %}
       {% if resultado_transporte %}
         <table>
@@ -101,6 +101,15 @@
         </table>
       {% endif %}
       <a href="{% url 'cidade' cidade.slug %}" class="link">Voltar</a>
+      <footer>
+        Alguma informação errada ou desatualizada? 
+        <a href="{% url 'colabore' %}" class="btn-link-colabore">clique aqui</a> e corrija-a!
+      </footer>
+      <footer>
+        <div align="right">
+          Cotação atualizada em XX/XX/XXXX
+        </div>
+      </footer>
     </div>
   </div>
 {% endblock conteudo %}
