@@ -28,7 +28,7 @@
           </ul>
         {% else %}
           <ul class="despesas">
-            <a href="{% url 'colabore' %}" class="btn-link-colabore">Colabore com Alimentação!</a>
+            <a href="{% url 'colabore' cidade.slug %}" class="btn-link-colabore">Colabore com Alimentação!</a>
           </ul>
         {% endif %}
 
@@ -41,7 +41,7 @@
           </ul>
         {% else %}
           <ul class="despesas">
-            <a href="{% url 'colabore' %}" class="btn-link-colabore">Colabore com Transporte!</a>
+            <a href="{% url 'colabore' cidade.slug %}" class="btn-link-colabore">Colabore com Transporte!</a>
           </ul>
         {% endif %}
 
@@ -54,7 +54,7 @@
           </ul>
         {% else %}
           <ul class="despesas">
-            <a href="{% url 'colabore' %}" class="btn-link-colabore">Colabore com Hospedagem!</a>
+            <a href="{% url 'colabore' cidade.slug %}" class="btn-link-colabore">Colabore com Hospedagem!</a>
           </ul>
         {% endif %}
 

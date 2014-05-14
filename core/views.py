@@ -45,7 +45,7 @@ def validar_captcha(request):
     else:
         return HttpResponse('False')
 
-def colabore(request):
+def colabore(request, slug):
     if request.method == 'POST':
         descricao = u''
         cidade = u''
@@ -57,7 +57,10 @@ def colabore(request):
         return render(request, 'sucesso.html')
     else:
         despesas = TipoDespesa.objects.all().order_by("id")
-        return render(request, 'colabore.html', {'despesas': despesas})
+        cidade = ""
+        if slug != "novo":
+            cidade = Cidade.objects.get(slug=slug)
+        return render(request, 'colabore.html', {'despesas': despesas, 'cidade': cidade})
     
 def sobre(request):
     return render(request, 'sobre.html')

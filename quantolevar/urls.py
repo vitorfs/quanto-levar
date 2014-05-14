@@ -6,7 +6,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
     url(r'^$', 'core.views.home', name='home'),
     url(r'^buscar/$', 'core.views.buscar', name='buscar'),
-    url(r'^colabore/$', 'core.views.colabore', name='colabore'),
+    url(r'^colabore/(?P<slug>[-\w]+)$', 'core.views.colabore', name='colabore'),
     url(r'^sobre/$', 'core.views.sobre', name='sobre'),
     url(r'^validar_captcha/$', 'core.views.validar_captcha', name='validar_captcha'),
     url(r'^carregarcotacoes/$', 'core.views.carregar_cotacoes', name='carregar_cotacoes'),
