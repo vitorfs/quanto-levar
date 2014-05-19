@@ -413,31 +413,34 @@ footer {
   box-shadow: inset 0 -0.125em 0 #F75F23;
 }
 
-.sobre a {
-  color: #F3F2EE;
-  background: #92C35E;
-  text-decoration: none;
-  font-size: 2em;
-  font-weight: 600;
-  top: 0;
-  float: right;
-  border-bottom-right-radius: 7px;
-  border-bottom-left-radius: 7px;
-  padding: .8em;
-  margin-top: -23px;
-  box-shadow: inset 0 -0.125em 0 #49612f;
-  margin-right: 80px;
-}
-
-.sobre a:hover {
-  background: #49612f;
-  box-shadow: inset 0 -0.125em 0 #49612f;
-}
-
 p.erro {
   font-size: 1.4em;
   color: #DD6568;
   font-weight: 600;
   text-align: center;
   display: none;
+}
+
+footer a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+footer a:hover {
+  border-bottom: 1px solid #ffffff;
+}
+
+.sobre p {
+  font-size: 1.8em;
+  text-align: justify;
+  margin-bottom: 1.4em;
+}
+
+.sobre a {
+  text-decoration: none;
+  color: #00b2cc;
+}
+
+.sobre a:hover {
+  text-decoration: underline;
 }
