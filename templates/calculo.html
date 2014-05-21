@@ -100,11 +100,11 @@
           </tbody>
         </table>
       {% endif %}
-      <a href="{% url 'cidade' cidade.slug %}" class="link">Voltar</a>
       <footer>
         Alguma informação errada ou desatualizada? 
         <a href="{% url 'colabore' cidade.slug %}" class="btn-link-colabore">clique aqui</a> e corrija-a!
       </footer>
+      <a href="{% url 'cidade' cidade.slug %}" class="link">Voltar</a>
     </div>
   </div>
 {% endblock conteudo %}
