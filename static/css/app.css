@@ -48,6 +48,11 @@ h1.titulo a {
   text-decoration: none;
 }
 
+h1.titulo a:hover {
+  color: #FFFFFF;
+  text-shadow: 4px 4px #000;
+}
+
 h2 {
   font-size: 4em;
   color: #F9F9F9;
@@ -439,8 +444,4 @@ footer a:hover {
 .sobre a {
   text-decoration: none;
   color: #00b2cc;
-}
-
-.sobre a:hover {
-  text-decoration: underline;
 }
