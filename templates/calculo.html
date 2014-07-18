@@ -39,15 +39,23 @@
             </tr>
             <tr>
               <th>Refeição</th>
+              {% if cotacao_sigla != 'BRL' %}
+                <th>Moeda Local ({{cotacao_sigla}})</th>
+              {% else %}
+                <th></th>
+              {% endif %}
               <th>Real (BRL)</th>
-              <th>Moeda Local ({{cotacao_sigla}})</th>
             </tr>
           </thead>
           <tbody>
             {% for refeicao, moedas in resultado_alimentacao %}
               <tr>
                 <td>{{ refeicao|slice:"1:" }}</td>
-                <td>{{ moedas.0|floatformat:"2" }}</td>
+                {% if cotacao_sigla != 'BRL' %}
+                  <td>{{ moedas.0|floatformat:"2" }}</td>
+                {% else %}
+                  <td></td>
+                {% endif %}
                 <td>{{ moedas.1|floatformat:"2" }}</td>
               </tr>
             {% endfor %}
@@ -62,15 +70,23 @@
             </tr>
             <tr>
               <th>Transporte</th>
+              {% if cotacao_sigla != 'BRL' %}
+                <th>Moeda Local ({{cotacao_sigla}})</th>
+              {% else %}
+                <th></th>
+              {% endif %}
               <th>Real (BRL)</th>
-              <th>Moeda Local ({{cotacao_sigla}})</th>
             </tr>
           </thead>
           <tbody>
             {% for transporte, moedas in resultado_transporte.iteritems %}
               <tr>
                 <td>{{ transporte }}</td>
-                <td>{{ moedas.0|floatformat:"2" }}</td>
+                {% if cotacao_sigla != 'BRL' %}
+                  <td>{{ moedas.0|floatformat:"2" }}</td>
+                {% else %}
+                  <td></td>
+                {% endif %}
                 <td>{{ moedas.1|floatformat:"2" }}</td>
               </tr>
             {% endfor %}
@@ -85,15 +101,23 @@
             </tr>
             <tr>
               <th>Hospedagem</th>
+              {% if cotacao_sigla != 'BRL' %}
+                <th>Moeda Local ({{cotacao_sigla}})</th>
+              {% else %}
+                <th></th>
+              {% endif %}
               <th>Real (BRL)</th>
-              <th>Moeda Local ({{cotacao_sigla}})</th>
             </tr>
           </thead>
           <tbody>
             {% for hospedagem, moedas in resultado_hospedagem.iteritems %}
               <tr>
                 <td>{{ hospedagem }}</td>
-                <td>{{ moedas.0|floatformat:"2" }}</td>
+                {% if cotacao_sigla != 'BRL' %}
+                  <td>{{ moedas.0|floatformat:"2" }}</td>
+                {% else %}
+                  <td></td>
+                {% endif %}
                 <td>{{ moedas.1|floatformat:"2" }}</td>
               </tr>
             {% endfor %}
