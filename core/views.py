@@ -101,13 +101,13 @@ def calculo(request, slug):
     if resultado_alimentacao:
         for despesa, moedas in resultado_alimentacao.iteritems():
             if (u'BRL' and cotacao.sigla) in resultado_total:                
-                resultado_total[u'BRL'] += moedas[0]
+                resultado_total[u'BRL'] += moedas[1]
                 if(cotacao.sigla != u'BRL'):
-                  resultado_total[cotacao.sigla] += moedas[1] 
+                  resultado_total[cotacao.sigla] += moedas[0] 
             else:
-                resultado_total[u'BRL'] = moedas[0]
+                resultado_total[u'BRL'] = moedas[1]
                 if(cotacao.sigla != u'BRL'):
-                  resultado_total[cotacao.sigla] = moedas[1]
+                  resultado_total[cotacao.sigla] = moedas[0]
     if nivel == Despesa.ECONOMICO:
         nivel = "Econômico"
     if nivel == Despesa.MODERADO:
